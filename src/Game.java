@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 public class Game extends Canvas implements Runnable,KeyListener{
 
 	/**
-	 * 
+	 * gej
 	 */
 	private static final long serialVersionUID = 1L;
 	private boolean isRunning = false;
