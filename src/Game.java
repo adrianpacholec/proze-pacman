@@ -20,6 +20,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	private Thread thread;
 	
 	public static Player player;
+	public static Mapa mapa;
 	
 	public Game(){
 		Dimension dimension = new Dimension(Game.WIDTH, Game.HEIGHT);
@@ -29,6 +30,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		
 		addKeyListener(this);
 		player = new Player(Game.WIDTH/2,Game.HEIGHT/2);
+		mapa = new Mapa("mapa.txt");
 	}
 	public synchronized void start(){
 		if(isRunning) return;
@@ -61,6 +63,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 		player.render(g);
+		mapa.render(g);
 		g.dispose();
 		bs.show();
 	}
