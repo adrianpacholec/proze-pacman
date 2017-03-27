@@ -10,9 +10,7 @@ import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable,KeyListener{
 
-	/**
-	 * gej
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private boolean isRunning = false;
 	public static final int WIDTH = 640, HEIGHT = 480;
@@ -102,21 +100,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	
 	}
 	
-	public static void main(String[] args){
-		Game game = new Game();
-		JFrame frame = new JFrame();
-		frame.setTitle(Game.TITLE);
-		frame.add(game);
-		frame.setResizable(false);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-		
-		game.start();
-		
-		
-	}
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==KeyEvent.VK_RIGHT) player.right = true;
