@@ -23,8 +23,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public Game(){
 		Dimension dimension = new Dimension(Game.WIDTH, Game.HEIGHT);
 		setPreferredSize(dimension);
-		setMinimumSize(dimension);
-		setMaximumSize(dimension);
+		//setMinimumSize(dimension);
+		//setMaximumSize(dimension);
 		
 		addKeyListener(this);
 		player = new Player(Game.WIDTH/2,Game.HEIGHT/2);
@@ -49,6 +49,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	
 	private void tick(){
 		player.tick();
+		mapa.tick();
 	}
 	private void render(){
 		BufferStrategy bs = getBufferStrategy();

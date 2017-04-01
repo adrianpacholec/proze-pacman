@@ -66,7 +66,7 @@ else if(source == ok){
 	JFrame frame = new JFrame();
 	frame.setTitle(Game.TITLE);
 	frame.add(game);
-	frame.setResizable(false);
+	//frame.setResizable(false);
 	frame.pack();
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.setLocationRelativeTo(null);
