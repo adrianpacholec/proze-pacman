@@ -14,13 +14,14 @@ public class Mapa {
 	
 	public List<Punkt> punkty;
 	public List<Enemy> enemies;
+	public List<Star> stars;
 
 	public Mapa(String path) {
 		punkty = new ArrayList<>();
 		enemies = new ArrayList<>();
+		stars = new ArrayList<>();
 		try {
-			File file = new File(path);
-			Scanner in = new Scanner(file);
+			Scanner in = new Scanner(new File(path));
 			tiles = new Tile[width][height];
 			int yy = 0;
 			while (in.hasNextLine()) {
@@ -36,6 +37,9 @@ public class Mapa {
 					}
 					else if (line.charAt(xx) == 'E'){
 						enemies.add(new Enemy(xx*32, yy*32));
+					}
+					else if (line.charAt(xx) == 'S'){
+						stars.add(new Star(xx*32, yy*32));
 					}
 					else{
 						punkty.add(new Punkt(xx*32,yy*32));
@@ -71,6 +75,10 @@ public class Mapa {
 	for(int i=0; i < enemies.size();i++)
 	{
 		enemies.get(i).render(g);
+	}
+	for(int i=0; i < stars.size();i++)
+	{
+		stars.get(i).render(g);
 	}
 }
 	

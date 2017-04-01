@@ -24,7 +24,7 @@ public class Player extends Rectangle{
 	*/
 	
 	public void tick(){
-		if(right && canMove(x+speed,y))x+=speed;
+		if(right)x+=speed;
 		if(left)x-=speed;
 		if(up)y-=speed;
 		if(down)y+=speed;
