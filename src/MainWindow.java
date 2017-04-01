@@ -1,22 +1,21 @@
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-/*
+/**
+ * 
+ * Klasa opisująca i tworząca menu główne gry, w którym są przyciski do rozpoczęcia nowej gry, wyswietlenia instrukcji i najlepszych wyników oraz możliwości zakończenia gry
+ * 
 * @author Pawel Kowalik
 * @author Adrian Pacholec
 */
@@ -24,15 +23,30 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class MainWindow extends JFrame implements ActionListener
 {
 	
-	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * nieobowiązkowy identyfikator klasy
+	 */
+	
 	private JButton  new_game, highscore, instruction, exit;
+	/**
+	 * przyciski z menu głownego
+	 */
+	
 	JMenuItem nimbus;
+	/**
+	 * zmienna wykorzystywana do zmiany stylu menu z defaultowego na styl nimbus
+	 */
+	
+	
+	/**
+	 * konstruktor menu glównego
+	 */
 	public MainWindow(){
-		super(Config.ApplicationName);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new GridLayout(4,1));
 		
+		super(Config.ApplicationName);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setLayout(new GridLayout(4,1));
 		
 		
 		new_game = new JButton("Nowa gra");
@@ -51,6 +65,10 @@ public class MainWindow extends JFrame implements ActionListener
 		add(exit);
 		exit.addActionListener(this);
 		
+		
+		/**
+		 * metoda służąca zmianie wyglądu menu 
+		 */
 	    nimbus = new JMenuItem("Metal");
 	    try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -60,6 +78,9 @@ public class MainWindow extends JFrame implements ActionListener
 			e.printStackTrace();
 		}
 	    SwingUtilities.updateComponentTreeUI(this);
+	    
+	    
+	    
 		pack();
 		setSize(800, 600);
 		setVisible(true);
@@ -68,7 +89,9 @@ public class MainWindow extends JFrame implements ActionListener
 	
 		
 }
-	
+	/**
+	 * metoda dająca przyciskom reakcje na wolę użytkownika
+	 */
 	public void actionPerformed(ActionEvent e) 
 	{
 		Object source = e.getSource();
@@ -80,7 +103,7 @@ public class MainWindow extends JFrame implements ActionListener
 	    }
 		
 		else if(source  == exit){
-			int answer = JOptionPane.showConfirmDialog(null, "Czy jesteś pewien?","Pytanie",JOptionPane.YES_NO_OPTION);
+			int answer = JOptionPane.showConfirmDialog(null, "Czy jesteś pewien ?","Pytanie",JOptionPane.YES_NO_OPTION);
 			if (answer == JOptionPane.YES_OPTION){
 				JOptionPane.showMessageDialog(null,"Do Zobaczenia");
 				dispose();
@@ -88,12 +111,16 @@ public class MainWindow extends JFrame implements ActionListener
 			else if (answer==JOptionPane.NO_OPTION)
 				JOptionPane.showMessageDialog(null,"Dobra decyzja");
 			else if (answer == JOptionPane.CLOSED_OPTION)
-				JOptionPane.showMessageDialog(null, "Tak nie robimy","Ostrzeżenie",JOptionPane.WARNING_MESSAGE);	
+				JOptionPane.showMessageDialog(null, "Tak nie robimy","OstrzeĹĽenie",JOptionPane.WARNING_MESSAGE);	
            }
 		
 		else if(source  == instruction){
-			new InstructionWindow().setVisible(true);
-			dispose();
+			try {
+				new InstructionWindow().setVisible(true);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			//setVisible(false);
 		}
 		else if(source  == highscore){
 			JOptionPane.showMessageDialog(null,"Ta opcja jeszcze nie jest dostępna");
