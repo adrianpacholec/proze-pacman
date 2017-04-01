@@ -1,6 +1,8 @@
 import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Mapa {
@@ -9,12 +11,17 @@ public class Mapa {
 	public int height = 35;
 
 	public Tile[][] tiles;
+	
+	public List<Punkt> punkty;
+	public List<Enemy> enemies;
+	public List<Star> stars;
 
 	public Mapa(String path) {
-
+		punkty = new ArrayList<>();
+		enemies = new ArrayList<>();
+		stars = new ArrayList<>();
 		try {
-			File file = new File(path);
-			Scanner in = new Scanner(file);
+			Scanner in = new Scanner(new File(path));
 			tiles = new Tile[width][height];
 			int yy = 0;
 			while (in.hasNextLine()) {
@@ -23,6 +30,19 @@ public class Mapa {
 					if (line.charAt(xx) == '1') {
 						tiles[xx][yy] = new Tile(xx * 32, yy * 32);
 
+					}
+					else if (line.charAt(xx) == 'P'){
+						Game.player.x = xx*32;
+						Game.player.y = yy*32;
+					}
+					else if (line.charAt(xx) == 'E'){
+						enemies.add(new Enemy(xx*32, yy*32));
+					}
+					else if (line.charAt(xx) == 'S'){
+						stars.add(new Star(xx*32, yy*32));
+					}
+					else{
+						punkty.add(new Punkt(xx*32,yy*32));
 					}
 				}
 				yy++;
@@ -33,14 +53,33 @@ public class Mapa {
 
 		}
 	}
-
+	public void tick(){
+		for(int i=0; i< enemies.size(); i++)
+		{
+			enemies.get(i).tick();
+		}
+	}
+	
+	
 	public void render(Graphics g) {
 		for (int x = 0; x < width; x++)
 			for (int y = 0; y < height; y++) {
-				if (tiles[x][y] != null)
-					tiles[x][y].render(g);
+				if (tiles[x][y] != null) tiles[x][y].render(g);
 			}
 
+	
+	for(int i=0; i < punkty.size();i++)
+	{
+		punkty.get(i).render(g);
 	}
-
+	for(int i=0; i < enemies.size();i++)
+	{
+		enemies.get(i).render(g);
+	}
+	for(int i=0; i < stars.size();i++)
+	{
+		stars.get(i).render(g);
+	}
+}
+	
 }
