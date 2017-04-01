@@ -1,5 +1,4 @@
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -21,7 +20,7 @@ public class ReadConfig {
      *
      * @param propFilePath ścieżka dostepu do pliku <code>.properties</code>
      * @return obiekt Properties zawierający dane z pliku
-     * @throws IOException jeżeli nie uda się otworzyć pliku konfiguracyjnego
+     * @throws IOException jeĹĽeli nie uda siÄ™ otworzyÄ‡ pliku konfiguracyjnego
      */
     public final Properties getProperties(String propFilePath) throws IOException {
 
