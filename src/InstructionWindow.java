@@ -54,7 +54,7 @@ public class InstructionWindow extends JFrame{
 		add(scrollPane);
 		
 		
-		//new MainWindow().setVisible(true);
+		
 	
 		
 	}
