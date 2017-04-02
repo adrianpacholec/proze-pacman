@@ -18,20 +18,64 @@ import javax.swing.SwingConstants;
 
 public class NickWindow extends JFrame implements ActionListener{
 	
-
+/**
+ * nieobowiązowy identyfikator klasy
+ */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * labele informujące użytkownika co am zrobić, wybrać poziom i wpsiać nick
+	 */
 	private JLabel nick, picklevel;
-	private JButton back;
-	private JButton ok;
+	
+	
+	/**
+	 * przyciski do poruszania się po menu
+	 */
+	private JButton back,ok;
+	
+	/**
+	 * pole tekstowe do wpisania nicku
+	 */
 	private JTextField field;
+	
+	/**
+	 * grupa radiobuttonów
+	 */
 	private ButtonGroup levels;
+	
+	/**
+	 * radiobuttony które pozwalają wybrać poziom trudności przez użytownika
+	 */
 	private JRadioButton easy,medium,hard;
+	
+	
+	/**
+	 * zmienna do określenia włąsnej czcionki
+	 */
 	private Font Userfont;
 	
-public NickWindow(){
-	super("Nazwa użytkownika");
-	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	
+	/**
+	 * zmienna zapisująca tekst który użytkownik wpisał do pola tekstowego
+	 */
+	public String nicktext;
+	
+	
+	
+	/**
+	 * konstruktor klasy NickWindow
+	 */
+public NickWindow(){
+	super(Config.UserName);
+	setLayout(new GridLayout(8,1));	
+	setSize(400, 200);
+	
+	/**
+	 * metoda pytająca użytkownika czy jest pewny, że chce skończyć wpisywanie nicku i zgodnie z jego wolą, albo zamyka to okno
+	 * i wraca do poprzedniego, albo jeśli użytkownik zmienił zdanie pozostaje w tej cześci menu 
+	 * 
+	 */
 	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	addWindowListener(new WindowAdapter() {
 		public void windowClosing(WindowEvent e){
@@ -42,14 +86,10 @@ public NickWindow(){
 			}
 		}
 	});
-	//setLocation(40,40);
-	setLayout(new GridLayout(8,1));	
-	setSize(400, 200);
+	
 	
 	
 	nick = new JLabel(Config.ButtonUserName,SwingConstants.CENTER);
-	//nick.setPreferredSize(new Dimension(800,800));
-	//nick.setBounds(20,20,150,20);
 	add(nick);
 	
 	Userfont = new Font("Courier", Font.BOLD, 15);
@@ -57,7 +97,6 @@ public NickWindow(){
 	field.setBounds(170,80,50,20);
 	field.setFont(Userfont);
 	add(field);
-	
 	
 	
 	
@@ -75,19 +114,19 @@ public NickWindow(){
 	
 	levels = new ButtonGroup();
 	
-	easy = new JRadioButton("Łatwy",true);
+	easy = new JRadioButton(Config.GameLevel_1,true);
 	levels.add(easy);
 	add(easy);
 	easy.setHorizontalAlignment(AbstractButton.CENTER);
 	easy.addActionListener(this);
 	
-	medium = new JRadioButton("Średni",false);
+	medium = new JRadioButton(Config.GameLevel_2,false);
 	levels.add(medium);
 	add(medium);
 	medium.setHorizontalAlignment(AbstractButton.CENTER);
 	medium.addActionListener(this);
 	
-	hard = new JRadioButton("Trudny",false);
+	hard = new JRadioButton(Config.GameLevel_3,false);
 	levels.add(hard);
 	add(hard);
 	hard.setHorizontalAlignment(AbstractButton.CENTER);
@@ -112,25 +151,34 @@ if(source  == back){
 
 else if(source == ok){
 	
-	
-	String text = field.getText();
-	
-	if(text.trim().equals("")){
+	/**
+	 * pobieranie nazwy użytkownika od użytkownika 
+	 */
+	nicktext = field.getText();
+	/**
+	 * seria sprawdzań mająca na celu wpisanie poprawnego nicku
+	 */
+	if(nicktext.trim().equals("")){
 		JOptionPane.showMessageDialog(null, " Musisz wprowadzić nazwę użytkownika ","Ostrzeżenie",JOptionPane.WARNING_MESSAGE);
 		field.setText("");
+		/**
+		 * ustawienie focusa na pole tekstowe
+		 */
 		field.requestFocus();
 		
 	}
 	else {
-	if (text.length() > 3 && !text.contains(" ") && !text.contains(",") && !text.contains(".") && !text.contains("!") && !text.contains("@") && !text.contains("#") && !text.contains("$") && !text.contains("*") && !text.contains("/") && !text.contains("+") && !text.contains("-") && !text.contains("]")) {
+	if (nicktext.length() > 3 && !nicktext.contains(" ") && !nicktext.contains(",") && !nicktext.contains(".") && !nicktext.contains("!") && !nicktext.contains("@") && !nicktext.contains("#") && !nicktext.contains("$") && !nicktext.contains("*") && !nicktext.contains("/") && !nicktext.contains("+") && !nicktext.contains("-") && !nicktext.contains("]")) {
 	    //make sure that its length is not over 1, and that it has no spaces and no commas 
 	    
-	    JOptionPane.showMessageDialog(null, " Twój nick: " + text ,"Ahoj przygodo!",JOptionPane.INFORMATION_MESSAGE);
+	    JOptionPane.showMessageDialog(null, " Twój nick: " + nicktext ,"Ahoj przygodo!",JOptionPane.INFORMATION_MESSAGE);
 	    
-	    
-	    Game game = new Game();
+	    /**
+	     * tworzenie okna z grą
+	     */
+	    Game game = new Game(nicktext);
 		JFrame frame = new JFrame();
-		frame.setTitle(Game.TITLE);
+		frame.setTitle(Config.ApplicationName);
 		frame.add(game);
 		//frame.setResizable(true);
 		frame.pack();
