@@ -1,14 +1,16 @@
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class Game extends Canvas implements Runnable,KeyListener{
+public class Game extends JPanel implements Runnable, KeyListener{
 
 	
 	private static final long serialVersionUID = 1L;
@@ -19,16 +21,14 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	
 	public static Player player;
 	public static Mapa mapa;
-	
+
 	public Game(){
 		Dimension dimension = new Dimension(Game.WIDTH, Game.HEIGHT);
-		setPreferredSize(dimension);
-		//setMinimumSize(dimension);
-		//setMaximumSize(dimension);
-		
+		setPreferredSize(dimension);	
 		addKeyListener(this);
 		player = new Player(Game.WIDTH/2,Game.HEIGHT/2);
 		mapa = new Mapa("mapa.txt");
+
 	}
 	public synchronized void start(){
 		if(isRunning) return;
@@ -47,60 +47,36 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		}	
 	}
 	
-	private void tick(){
-		player.tick();
-		mapa.tick();
-	}
-	private void render(){
-		BufferStrategy bs = getBufferStrategy();
-		if(bs == null){
-			createBufferStrategy(3);
-			return;
-		}
+	public void paint(Graphics g)
+    {
+    	
+    	BufferedImage dbImage = new BufferedImage(640,480,BufferedImage.TYPE_INT_ARGB);
+		Graphics dbg = dbImage.getGraphics();
+		paintComponent(dbg);
 		
-		Graphics g = bs.getDrawGraphics();
-		g.setColor(Color.black);
+		BufferedImage scaled=new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+		Graphics2D gg=scaled.createGraphics();
+		gg.drawImage(dbImage, 0, 0, getWidth(),getHeight(), null);
+		g.drawImage(scaled, 0, 0, this);
+    }
+    
+    public void paintComponent(Graphics g)
+    {
+    	super.paintComponent(g);
+    	g.setColor(Color.black);
 		g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
+		g.setColor(Color.white);
+		g.setFont(new Font(Font.DIALOG,Font.BOLD,19));
 		player.render(g);
 		mapa.render(g);
-		g.dispose();
-		bs.show();
-	}
-	
-	@Override
-	public void run() {
-		requestFocus();
-		int fps = 0;
-		double timer = System.currentTimeMillis();
-		long lastTime = System.nanoTime();
-		double targetTick = 60.0;
-		double delta = 0;
-		double ns = 1000000000/targetTick;
-		
-		while(isRunning){
-			long now = System.nanoTime();
-			delta+=(now - lastTime) / ns;
-			lastTime = now;
-			
-			while(delta >= 1){
-				tick();
-				render();
-				fps++;	
-				delta--;
-			}	
-
-			if(System.currentTimeMillis()-timer >= 1000){
-				System.out.println(fps);
-				fps = 0;
-				timer+=1000;
-			
-			}
-		}
-		
-	stop();
-	
-	}
-	
+		g.drawString("Punkty: 0",15,25);
+		g.setColor(Color.orange);
+		g.fillRect(590, 8, 18, 18);
+		g.fillRect(560, 8, 18, 18);
+		g.fillRect(530, 8, 18, 18);
+		//g.dispose();
+    }
+				
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==KeyEvent.VK_RIGHT) player.right = true;
@@ -118,6 +94,11 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
