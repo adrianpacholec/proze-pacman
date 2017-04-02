@@ -8,95 +8,130 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
-public class Game extends JPanel implements Runnable, KeyListener{
+/**
+ * Klasa opisująca panel Swing, w którym odbywa się rysowanie grafiki gry.
+ * Obsługuje jednocześnie część logiki gry związaną z połączeniem innych części
+ * w jedno.
+ *
+ * @author Paweł Kowalik
+ * @author Adrian Pacholec
+ * @version 1.0
+ */
 
-	
-	private static final long serialVersionUID = 1L;
+public class Game extends JPanel implements Runnable {
+
+	/**
+	 * Flaga ozaczająca, czy wątek działa
+	 */
 	private boolean isRunning = false;
+	/**
+	 * Główny wątek gry
+	 */
 	private Thread thread;
+	/**
+	 * Nick gracza
+	 */
 	public String nick;
+	/**
+	 * Obiekt gracza
+	 */
 	public static Player player;
+	/**
+	 * Obiekt mapy
+	 */
 	public static Mapa mapa;
+	/**
+	 * Obiekt reprezentujący GUI
+	 */
+	public static GUI gui;
 
-	public Game(String nicktext){
+	/**
+	 * Konstruktor przyjmuje String oznaczający nick gracza, ustawia wstępne
+	 * wymiary planszy gry i tworzy obiekt gracza i mapy
+	 * 
+	 * @param nicktext
+	 *            Nick gracza
+	 */
+	public Game(String nicktext) {
 		Dimension dimension = new Dimension(Config.GameWidth, Config.GameHeight);
-		setPreferredSize(dimension);	
-		addKeyListener(this);
-		player = new Player(Config.GameWidth/2,Config.GameHeight/2);
+		setPreferredSize(dimension);
+		player = new Player(Config.GameWidth / 2, Config.GameHeight / 2);
 		mapa = new Mapa(Config.FileMap);
 		nick = nicktext;
-	
+		gui = new GUI();
 	}
-	public synchronized void start(){
-		if(isRunning) return;
+
+	/**
+	 * Metoda odpowiedzialna za rozpoczęcie pracy wątku odpowiedzialnego za
+	 * rysowanie
+	 */
+	public synchronized void start() {
+		if (isRunning)
+			return;
 		isRunning = true;
 		thread = new Thread(this);
 		thread.start();
 	}
-	
-	public synchronized void stop(){	
-		if (!isRunning) return;
+
+	/**
+	 * Metoda kończąca pracę programu, gdy flaga isRunning
+	 */
+	public synchronized void stop() {
+		if (!isRunning)
+			return;
 		isRunning = false;
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
-	
-	public void paint(Graphics g)
-    {
-    	
-    	BufferedImage dbImage = new BufferedImage(640,480,BufferedImage.TYPE_INT_ARGB);
+
+	/**
+	 * Metoda paint, rysująca grafikę. Tworzy BufferedImage o wymiarach
+	 * początkowych, na podstawie którego tworzony jest kontekst graficzny,
+	 * przekazywany do drugiego bufora, o rozmiarach takich, jak JPanel. W ten
+	 * sposób generowana grafika rozciągana jest do aktualnych rozmiarów okna.
+	 * 
+	 * @param g
+	 *            Kontekst graficzny
+	 * 
+	 */
+	public void paint(Graphics g) {
+
+		BufferedImage dbImage = new BufferedImage(Config.GameWidth, Config.GameHeight, BufferedImage.TYPE_INT_ARGB);
 		Graphics dbg = dbImage.getGraphics();
 		paintComponent(dbg);
-		
-		BufferedImage scaled=new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-		Graphics2D gg=scaled.createGraphics();
-		gg.drawImage(dbImage, 0, 0, getWidth(),getHeight(), null);
+
+		BufferedImage scaled = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D gg = scaled.createGraphics();
+		gg.drawImage(dbImage, 0, 0, getWidth(), getHeight(), null);
 		g.drawImage(scaled, 0, 0, this);
-    }
-    
-    public void paintComponent(Graphics g)
-    {
-    	super.paintComponent(g);
-    	g.setColor(Color.black);
+	}
+
+	/**
+	 * Metoda paintComponenet, wywoływana jest z metody paint - przy każdym jej
+	 * wywołaniu rysuje tło planszy, a także wywołuje metody render() jej
+	 * składowych
+	 * 
+	 * @param g
+	 *            Kontekst graficzny
+	 * 
+	 */
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.setColor(Color.black);
 		g.fillRect(0, 0, Config.GameWidth, Config.GameHeight);
-		g.setColor(Color.white);
-		g.setFont(new Font(Font.DIALOG,Font.BOLD,19));
 		player.render(g);
 		mapa.render(g);
-		g.drawString("Punkty: 0",15,25);
-		g.drawString("Twój nick to: " + nick, 200, 470);
-		g.setColor(Color.orange);
-		g.fillRect(590, 8, 18, 18);
-		g.fillRect(560, 8, 18, 18);
-		g.fillRect(530, 8, 18, 18);
-		//g.dispose();
-    }
-				
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_RIGHT) player.right = true;
-		if(e.getKeyCode()==KeyEvent.VK_LEFT) player.left = true;
-		if(e.getKeyCode()==KeyEvent.VK_UP) player.up = true;
-		if(e.getKeyCode()==KeyEvent.VK_DOWN) player.down = true;
+		//gui.render(g, nick);
+		g.dispose();
 	}
-	@Override
-	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_RIGHT) player.right = false;
-		if(e.getKeyCode()==KeyEvent.VK_LEFT) player.left = false;
-		if(e.getKeyCode()==KeyEvent.VK_UP) player.up = false;
-		if(e.getKeyCode()==KeyEvent.VK_DOWN) player.down = false;
-		
-	}
-	@Override
-	public void keyTyped(KeyEvent e) {}
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
 }
