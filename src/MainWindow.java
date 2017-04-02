@@ -4,8 +4,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
-
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -47,6 +45,12 @@ public class MainWindow extends JFrame implements ActionListener
 	public MainWindow(){
 		
 		super(Config.ApplicationName);
+		setSize(800, 600);
+		setVisible(true);
+		/**
+		 * metoda pytająca użytkownika czy jest pewny, że chce zakończyć grę i zgodnie z jego wolą, albo zamyka okno z men
+		 *
+		 */
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e){
@@ -56,22 +60,26 @@ public class MainWindow extends JFrame implements ActionListener
 				}
 			}
 		});
+		
+		/**
+		 * ustwienie layoutu gridlayout, 4 przyciski w pionie
+		 */
 		setLayout(new GridLayout(4,1));
 		
 		
-		new_game = new JButton("Nowa gra");
+		new_game = new JButton(Config.ButtonNewGame);
 		add(new_game);
 		new_game.addActionListener(this);
 		
-		highscore = new JButton("Najlepsze wyniki");
+		highscore = new JButton(Config.ButtonHighscores);
 		add(highscore);
 		highscore.addActionListener(this);
 		
-		instruction = new JButton("Instrukcja");
+		instruction = new JButton(Config.ButtonInstruction);
 		add(instruction);
 		instruction.addActionListener(this);
 		
-		exit = new JButton("Koniec");
+		exit = new JButton(Config.ButtonEndGame);
 		add(exit);
 		exit.addActionListener(this);
 		
@@ -92,8 +100,7 @@ public class MainWindow extends JFrame implements ActionListener
 	    
 	    
 		pack();
-		setSize(800, 600);
-		setVisible(true);
+		
 		
 		
 	
@@ -104,14 +111,23 @@ public class MainWindow extends JFrame implements ActionListener
 	 */
 	public void actionPerformed(ActionEvent e) 
 	{
+		/**
+		 * stworzenie obiektu który będzie reagował na nasze kliknięcia
+		 */
 		Object source = e.getSource();
 		
+		/**
+		 * jesli zrodłem jest przycisk nowej gry to tworzone jest okno z wyborem nicku, a to okno porzucane
+		 */
 		if(source == new_game){
 			
 			new NickWindow().setVisible(true);
 			dispose();
 	    }
 		
+		/**
+		 * jesli zrodłem jest przycisk końca to użytkownuk pytany jest czy jest tego pewien i albo zamykane jest menu główne albo nic się z nim nie dzieje 
+		 */
 		else if(source  == exit){
 			int answer = JOptionPane.showConfirmDialog(null, "Czy jesteś pewien ?","Pytanie",JOptionPane.YES_NO_OPTION);
 			if (answer == JOptionPane.YES_OPTION){
@@ -123,7 +139,9 @@ public class MainWindow extends JFrame implements ActionListener
 			else if (answer == JOptionPane.CLOSED_OPTION)
 				JOptionPane.showMessageDialog(null, "Tak nie robimy","OstrzeĹĽenie",JOptionPane.WARNING_MESSAGE);	
            }
-		
+		/**
+		 * jesli zródlem jest przycisk instrukcji do gry, to jest ona wyswietlana
+		 */
 		else if(source  == instruction){
 			try {
 				new InstructionWindow().setVisible(true);
@@ -132,6 +150,10 @@ public class MainWindow extends JFrame implements ActionListener
 			}
 			setVisible(false);
 		}
+		
+		/**
+		 * jesli zrodlem jest przycisk najlepszych wynikow to sa one wyswietlane w oddzielnym oknie
+		 */
 		else if(source  == highscore){
 			JOptionPane.showMessageDialog(null,"Ta opcja jeszcze nie jest dostępna");
 			
