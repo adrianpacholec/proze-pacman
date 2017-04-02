@@ -13,65 +13,124 @@ import java.util.Properties;
 
 public class Config {
 
-	public static String ApplicationName;
+	
 	/**
 	 * nazwa aplikacji
 	 */
+	public static String ApplicationName;
 	
-	public static int WindowWidth;
 	/**
 	 * szerokość okna
 	 */
+	public static int WindowWidth;
 	
-	public static int WindowHeight;
 	/**
 	 * wysokość okna
 	 */
+	public static int WindowHeight;
 	
-	public static String ButtonCancel;
 	/**
 	 *  tekst pod przyciskiem anulowania
 	 */
+	public static String ButtonCancel;
 	
-	public static String ButtonBack;
 	/**
 	 * tekst pod przyciskiem przycisku do powrotu
 	 */
+	public static String ButtonBack;
 	
-	public static String ButtonNewGame;
 	/**
 	 *  tekst pod przyciskiem służącym przejściu do menu nowej gry
 	 */
+	public static String ButtonNewGame;
 	
-	public static String ButtonInstruction;
 	/**
 	 * tekst pod przyciskiem pod służącym do wyświetlenia instrukcji
 	 */
+	public static String ButtonInstruction;
 	
-	public static String ButtonHighscores;
 	/**
 	 *  tekst pod przyciskiem służącym do wyświetlania wyników
 	 */
+	public static String ButtonHighscores;
 	
-	public static String ButtonEndGame;
 	/**
 	 * tekst pod przyciskiem służącym do wyjścia z gry
 	 */
+	public static String ButtonEndGame;
 	
-	public static String ButtonOK;
 	/**
 	 * tekst pod przyciekiem służącym do wybrania opcji OK
 	 */
+	public static String ButtonOK;
 	
-	public static String ButtonUserName;
 	/**
 	 * tekst pod przyciskiem służącym do wprowadzenia nazwy użytkownika
 	 */
+	public static String ButtonUserName;
+	
+	
+	/**
+	 * tekst pod przyciskiem służącym do ustawienia poziomu trudności na łatwy
+	 */
+	public static String GameLevel_1;
+	
+	/**
+	 * tekst pod przyciskiem służącym do ustawienia poziomu trudności na średni
+	 */
+	public static String GameLevel_2;
+	
+	
+	/**
+	 * tekst pod przyciskiem służącym do ustawienia poziomu trudności na trudny
+	 */
+	public static String GameLevel_3;
+	
+	
+	
+	/**
+	 * prędkość duszków na poziomie łatwym
+	 */
+	public static int GhostSpeed_Level_1;
+	
+	
+	
+	/**
+	 * prędkość duszków na poziomie średnim
+	 */
+	public static int GhostSpeed_Level_2;
+	
+	
+	/**
+	 * prędkość duszków na poziomie trudnym
+	 */
+	public static int GhostSpeed_Level_3;
+	
+	/**
+	 * nazwa pliku z instrukcją
+	 */
+	public static String FileInstruction;
+	
+	
+	/**
+	 * szerokość okna z grą 
+	 */
+	public static int GameWidth;
+	
+	
+	
+	/**
+	 * szerokość okna z grą 
+	 */
+	public static int GameHeight;
+	
+	
+	public static String FileMap;
 	
 	
 	/**
 	 Metoda parsująca dane konfiguracyjne, w trybie offline,  dane sÄ… wczytywane z lokalnego pliku konfiguracyjnego
-     * @param Config obiekt Properties, który przechowuje dane do sparsowania
+    * @param Config obiekt Properties, który przechowuje dane do sparsowania
 	*/
 	
 	public static void readConstants(Properties Config){
@@ -86,7 +145,16 @@ public class Config {
         ButtonEndGame = Config.getProperty("ButtonEndGame");
         ButtonOK = Config.getProperty("ButtonOK");
         ButtonUserName = Config.getProperty("ButtonUserName");
-        
+        GameLevel_1 = Config.getProperty("GameLevel_1");
+        GameLevel_2 = Config.getProperty("GameLevel_2");
+        GameLevel_3= Config.getProperty("GameLevel_3");
+        GhostSpeed_Level_1= Integer.parseInt(Config.getProperty("GhostSpeed_Level_1"));
+        GhostSpeed_Level_2 = Integer.parseInt(Config.getProperty("GhostSpeed_Level_2"));
+        GhostSpeed_Level_3= Integer.parseInt(Config.getProperty("GhostSpeed_Level_3"));
+        FileInstruction= Config.getProperty("FileInstruction");
+        GameWidth= Integer.parseInt(Config.getProperty("GameWidth"));
+        GameHeight= Integer.parseInt(Config.getProperty("GameHeight"));
+        FileMap= Config.getProperty("FileMap");
         
 	}
 	
