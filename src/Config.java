@@ -91,20 +91,20 @@ public class Config {
 	/**
 	 * prędkość duszków na poziomie łatwym
 	 */
-	public static int GhostSpeed_Level_1;
+	public static int EnemySpeed_Level_1;
 	
 	
 	
 	/**
 	 * prędkość duszków na poziomie średnim
 	 */
-	public static int GhostSpeed_Level_2;
+	public static int EnemySpeed_Level_2;
 	
 	
 	/**
 	 * prędkość duszków na poziomie trudnym
 	 */
-	public static int GhostSpeed_Level_3;
+	public static int EnemySpeed_Level_3;
 	
 	/**
 	 * nazwa pliku z instrukcją
@@ -125,7 +125,28 @@ public class Config {
 	public static int GameHeight;
 	
 	
+	
+	/**
+	 * nazwa pliku z mapą
+	 */
 	public static String FileMap;
+	
+	/**
+	 * 
+	 */
+	public static int MapWidth;
+	
+	
+	/**
+	 * 
+	 */
+	public static int MapHeight;
+	
+	
+	/**
+	 * Tytuł okna NickWindow
+	 */
+	public static String UserName;
 	
 	
 	/**
@@ -148,14 +169,16 @@ public class Config {
         GameLevel_1 = Config.getProperty("GameLevel_1");
         GameLevel_2 = Config.getProperty("GameLevel_2");
         GameLevel_3= Config.getProperty("GameLevel_3");
-        GhostSpeed_Level_1= Integer.parseInt(Config.getProperty("GhostSpeed_Level_1"));
-        GhostSpeed_Level_2 = Integer.parseInt(Config.getProperty("GhostSpeed_Level_2"));
-        GhostSpeed_Level_3= Integer.parseInt(Config.getProperty("GhostSpeed_Level_3"));
+        EnemySpeed_Level_1= Integer.parseInt(Config.getProperty("EnemySpeed_Level_1"));
+        EnemySpeed_Level_2 = Integer.parseInt(Config.getProperty("EnemySpeed_Level_2"));
+        EnemySpeed_Level_3= Integer.parseInt(Config.getProperty("EnemySpeed_Level_3"));
         FileInstruction= Config.getProperty("FileInstruction");
         GameWidth= Integer.parseInt(Config.getProperty("GameWidth"));
         GameHeight= Integer.parseInt(Config.getProperty("GameHeight"));
         FileMap= Config.getProperty("FileMap");
-        
+        MapWidth= Integer.parseInt(Config.getProperty("MapWidth"));
+        MapHeight= Integer.parseInt(Config.getProperty("MapHeight"));
+        UserName= Config.getProperty("UserName");
 	}
 	
 	
