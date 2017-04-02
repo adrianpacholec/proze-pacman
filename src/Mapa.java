@@ -5,16 +5,47 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Klasa reprezentująca mapę gry
+ *
+ * @author Paweł Kowalik
+ * @author Adrian Pacholec
+ * @version 1.0
+ */
 public class Mapa {
-
+	/**
+	 * Liczba rzędów bloków
+	 */
 	public int width = 35;
+	/**
+	 * Liczba kolumn bloków
+	 */
 	public int height = 35;
-
+	/**
+	 * Tablica obiektów typu Tile
+	 */
 	public Tile[][] tiles;
-	
+	/**
+	 * Lista obiektów typu Punkt
+	 */
 	public List<Punkt> punkty;
+	/**
+	 * Lista obiektów typu Enemy
+	 */
 	public List<Enemy> enemies;
+	/**
+	 * Lista obiektów typu Star
+	 */
 	public List<Star> stars;
+
+	/**
+	 * Konstruktor obiektu mapy. Wczytuje informację o pozycji danego obiektu na
+	 * planszy z pliku mapa.txt i odpowiednio tworzy obiekty na mapie.
+	 * 
+	 * @param path
+	 *            Ścieżka dostępu do pliku mapa.txt
+	 * 
+	 */
 
 	public Mapa(String path) {
 		punkty = new ArrayList<>();
@@ -30,19 +61,15 @@ public class Mapa {
 					if (line.charAt(xx) == '1') {
 						tiles[xx][yy] = new Tile(xx * 32, yy * 32);
 
-					}
-					else if (line.charAt(xx) == 'P'){
-						Game.player.x = xx*32;
-						Game.player.y = yy*32;
-					}
-					else if (line.charAt(xx) == 'E'){
-						enemies.add(new Enemy(xx*32, yy*32));
-					}
-					else if (line.charAt(xx) == 'S'){
-						stars.add(new Star(xx*32, yy*32));
-					}
-					else{
-						punkty.add(new Punkt(xx*32,yy*32));
+					} else if (line.charAt(xx) == 'P') {
+						Game.player.x = xx * 32;
+						Game.player.y = yy * 32;
+					} else if (line.charAt(xx) == 'E') {
+						enemies.add(new Enemy(xx * 32, yy * 32));
+					} else if (line.charAt(xx) == 'S') {
+						stars.add(new Star(xx * 32, yy * 32));
+					} else {
+						punkty.add(new Punkt(xx * 32, yy * 32));
 					}
 				}
 				yy++;
@@ -53,33 +80,31 @@ public class Mapa {
 
 		}
 	}
-	public void tick(){
-		for(int i=0; i< enemies.size(); i++)
-		{
-			enemies.get(i).tick();
-		}
-	}
-	
-	
+
+	/**
+	 * Metoda render wywołująca metody render poszczególnych obiektów należących
+	 * do mapy gry
+	 * 
+	 * @param g
+	 *            Kontekst graficzny
+	 * 
+	 */
 	public void render(Graphics g) {
 		for (int x = 0; x < width; x++)
 			for (int y = 0; y < height; y++) {
-				if (tiles[x][y] != null) tiles[x][y].render(g);
+				if (tiles[x][y] != null)
+					tiles[x][y].render(g);
 			}
 
-	
-	for(int i=0; i < punkty.size();i++)
-	{
-		punkty.get(i).render(g);
+		for (int i = 0; i < punkty.size(); i++) {
+			punkty.get(i).render(g);
+		}
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).render(g);
+		}
+		for (int i = 0; i < stars.size(); i++) {
+			stars.get(i).render(g);
+		}
 	}
-	for(int i=0; i < enemies.size();i++)
-	{
-		enemies.get(i).render(g);
-	}
-	for(int i=0; i < stars.size();i++)
-	{
-		stars.get(i).render(g);
-	}
-}
-	
+
 }
