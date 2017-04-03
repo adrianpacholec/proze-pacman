@@ -1,8 +1,26 @@
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * 
+ * Główna klasa naszej gry PACMAN
+ * 
+ * 
+ * @author Pawel Kowalik
+ * @author Adrian Pacholec
+ * @version 1.0
+ */
+
+
 public class Main 
 {
+	
+	/**
+     * Wczytanie pliku konfiguracyjnego  Config.properties i utworzenie 
+     * na jego podstawie instancji menu głównego
+     *
+     * @param args argumenty przekazane do aplikacji
+     */
 	public static void main(String[] args)
 	{
 		String configPath = "config.properties";
