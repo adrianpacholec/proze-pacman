@@ -11,6 +11,15 @@ import java.awt.Rectangle;
  */
 public class Player extends Rectangle {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+/**
+ * zmienne służące do obsługi ruchu pacmana
+ */
+	public boolean right, left, down, up;
+	
+	/**
 	 * Konstruktor obiektu gracza
 	 * 
 	 * @param x
@@ -34,5 +43,19 @@ public class Player extends Rectangle {
 		g.setColor(Color.yellow);
 		g.fillRect(x, y, width, height);
 	}
-
+	
+	
+	
+	/**
+	 * metoda 
+	 */
+	public void tick(){
+		if(right)x+=Config.PacmanSpeed;
+		if(left)x-=Config.PacmanSpeed;
+		if(up)y-=Config.PacmanSpeed;
+		if(down)y+=Config.PacmanSpeed;
+	}
+	
+	
+	
 }
