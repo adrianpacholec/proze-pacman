@@ -2,8 +2,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.renderable.RenderableImage;
+
 import javax.swing.JPanel;
+
+import com.sun.javafx.animation.TickCalculation;
 
 /**
  * Klasa opisująca panel Swing, w którym odbywa się rysowanie grafiki gry.
@@ -15,8 +21,12 @@ import javax.swing.JPanel;
  * @version 1.0
  */
 
-public class Game extends JPanel implements Runnable {
+public class Game extends JPanel implements Runnable,KeyListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Flaga ozaczająca, czy wątek działa
 	 */
@@ -56,6 +66,8 @@ public class Game extends JPanel implements Runnable {
 		mapa = new Mapa(Config.FileMap);
 		nick = nicktext;
 		gui = new GUI();
+		addKeyListener(this);
+		setFocusable(true);
 	}
 
 	/**
@@ -68,6 +80,7 @@ public class Game extends JPanel implements Runnable {
 		isRunning = true;
 		thread = new Thread(this);
 		thread.start();
+		setFocusable(true);
 	}
 
 	/**
@@ -121,14 +134,79 @@ public class Game extends JPanel implements Runnable {
 		g.fillRect(0, 0, Config.GameWidth, Config.GameHeight);
 		player.render(g);
 		mapa.render(g);
-		//gui.render(g, nick);
+		gui.render(g, nick);
 		g.dispose();
+		setFocusable(true);
 	}
 
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	
 
+
+	/**
+	 * metoda typu KeyListener reagująca na nakliknięcie guzika
+	 */
+	public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+
+        switch (keyCode) {
+
+            case KeyEvent.VK_LEFT:
+            	 player.x -= Config.PacmanSpeed;
+            	
+                break;
+
+            case KeyEvent.VK_RIGHT:
+            	 player.x+= Config.PacmanSpeed;
+            	 
+                break;
+
+            case KeyEvent.VK_UP:
+
+            	 player.y -= Config.PacmanSpeed;
+            	 
+                break;
+
+            case KeyEvent.VK_DOWN:
+            	 player.y += Config.PacmanSpeed;
+            	 
+                break;
+
+            
+            default:
+                break;
+        }
+
+    }
+
+	
+	/**
+	 * metoda, która reaguje na zwolnienie klawisza true na false i zatrzymująca pacmana
+	 */
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) player.right = false;
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) player.left = false;
+		if(e.getKeyCode() == KeyEvent.VK_UP) player.up = false;
+		if(e.getKeyCode() == KeyEvent.VK_DOWN) player.down = false;
 	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+		
+		
+	
+
+	
+
+	
+    
+
+
+	
 
 }
