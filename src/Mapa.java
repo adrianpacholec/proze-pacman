@@ -21,6 +21,12 @@ public class Mapa {
 	 * Liczba kolumn bloków
 	 */
 	public int height = 35;
+	
+	
+	/**
+	 * rozmiar mapy
+	 */
+	static public int MapSize;
 	/**
 	 * Tablica obiektów typu Tile
 	 */
@@ -57,10 +63,10 @@ public class Mapa {
 			int yy = 0;
 			while (in.hasNextLine()) {
 				String line = in.nextLine();
+				MapSize = line.length();
 				for (int xx = 0; xx < line.length(); xx++) {
 					if (line.charAt(xx) == '1') {
 						tiles[xx][yy] = new Tile(xx * 32, yy * 32);
-
 					} else if (line.charAt(xx) == 'P') {
 						Game.player.x = xx * 32;
 						Game.player.y = yy * 32;
@@ -74,6 +80,7 @@ public class Mapa {
 				}
 				yy++;
 			}
+			System.out.println(yy);
 			in.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
