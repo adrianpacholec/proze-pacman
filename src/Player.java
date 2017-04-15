@@ -49,7 +49,7 @@ public class Player extends Rectangle {
 	/**
 	 * metoda 
 	 */
-	public void tick(){
+	public void update(){
 		if(right)x+=Config.PacmanSpeed;
 		if(left)x-=Config.PacmanSpeed;
 		if(up)y-=Config.PacmanSpeed;
