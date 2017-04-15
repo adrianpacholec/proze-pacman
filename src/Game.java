@@ -2,14 +2,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.renderable.RenderableImage;
-
 import javax.swing.JPanel;
-
-import com.sun.javafx.animation.TickCalculation;
+import javax.swing.Timer;
 
 /**
  * Klasa opisująca panel Swing, w którym odbywa się rysowanie grafiki gry.
@@ -21,7 +20,7 @@ import com.sun.javafx.animation.TickCalculation;
  * @version 1.0
  */
 
-public class Game extends JPanel implements Runnable,KeyListener {
+public class Game extends JPanel implements Runnable, KeyListener {
 
 	/**
 	 * 
@@ -51,7 +50,7 @@ public class Game extends JPanel implements Runnable,KeyListener {
 	 * Obiekt reprezentujący GUI
 	 */
 	public static GUI gui;
-
+	
 	/**
 	 * Konstruktor przyjmuje String oznaczający nick gracza, ustawia wstępne
 	 * wymiary planszy gry i tworzy obiekt gracza i mapy
@@ -68,13 +67,32 @@ public class Game extends JPanel implements Runnable,KeyListener {
 		gui = new GUI();
 		addKeyListener(this);
 		setFocusable(true);
+		
+		class TimeListener implements ActionListener{
+			
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				repaint();
+				player.update();
+				//mapa.update();
+			}
+		}
+		
+		ActionListener listener = new TimeListener();
+		Timer timer = new Timer(1000/60, listener);
+		timer.start();
+
 	}
 
 	/**
 	 * Metoda odpowiedzialna za rozpoczęcie pracy wątku odpowiedzialnego za
 	 * rysowanie
 	 */
-	public synchronized void start() {
+
+	@Override
+	public void run() {
 		if (isRunning)
 			return;
 		isRunning = true;
@@ -139,74 +157,69 @@ public class Game extends JPanel implements Runnable,KeyListener {
 		setFocusable(true);
 	}
 
-	@Override
 	
-
-
 	/**
 	 * metoda typu KeyListener reagująca na nakliknięcie guzika
-	 */
+	 
 	public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
+		int keyCode = e.getKeyCode();
 
-        switch (keyCode) {
+		switch (keyCode) {
 
-            case KeyEvent.VK_LEFT:
-            	 player.x -= Config.PacmanSpeed;
-            	
-                break;
+		case KeyEvent.VK_LEFT:
+			player.x -= Config.PacmanSpeed;
 
-            case KeyEvent.VK_RIGHT:
-            	 player.x+= Config.PacmanSpeed;
-            	 
-                break;
+			break;
 
-            case KeyEvent.VK_UP:
+		case KeyEvent.VK_RIGHT:
+			player.x += Config.PacmanSpeed;
 
-            	 player.y -= Config.PacmanSpeed;
-            	 
-                break;
+			break;
 
-            case KeyEvent.VK_DOWN:
-            	 player.y += Config.PacmanSpeed;
-            	 
-                break;
+		case KeyEvent.VK_UP:
 
-            
-            default:
-                break;
-        }
+			player.y -= Config.PacmanSpeed;
 
-    }
+			break;
 
-	
+		case KeyEvent.VK_DOWN:
+			player.y += Config.PacmanSpeed;
+
+			break;
+
+		default:
+			break;
+		}
+
+	}
+	*/
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) player.right = true;
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) player.left = true;
+		if(e.getKeyCode() == KeyEvent.VK_UP) player.up = true; 
+		if(e.getKeyCode() == KeyEvent.VK_DOWN) player.down = true;
+		
+	}
 	/**
-	 * metoda, która reaguje na zwolnienie klawisza true na false i zatrzymująca pacmana
+	 * metoda, która reaguje na zwolnienie klawisza true na false i zatrzymująca
+	 * pacmana
 	 */
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT) player.right = false;
-		if(e.getKeyCode() == KeyEvent.VK_LEFT) player.left = false;
-		if(e.getKeyCode() == KeyEvent.VK_UP) player.up = false;
-		if(e.getKeyCode() == KeyEvent.VK_DOWN) player.down = false;
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+			player.right = false;
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+			player.left = false;
+		if (e.getKeyCode() == KeyEvent.VK_UP)
+			player.up = false;
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
+			player.down = false;
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-	
-		
-		
-	
-
-	
-
-	
-    
-
-
-	
 
 }
