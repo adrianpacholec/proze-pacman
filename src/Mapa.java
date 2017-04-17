@@ -88,6 +88,14 @@ public class Mapa {
 		}
 	}
 
+	public void tick(){
+    	for(int i=0;i<enemies.size();i++){
+    		enemies.get(i).tick();
+    	}
+    }
+	
+	
+	
 	/**
 	 * Metoda render wywołująca metody render poszczególnych obiektów należących
 	 * do mapy gry
