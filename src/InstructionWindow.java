@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
  * 
  * @author Pawel Kowalik
  * @author Adrian PAcholec
- *
+ * @version 1.0
  */
 
 
@@ -41,11 +41,7 @@ public class InstructionWindow extends JFrame{
 	private final JTextArea textArea;
 	
 	
-	/**
-	 * konstruktor klasy InstructionWindow wyrzucający wyjątek w przypadku nie znalezienia pliku
-	 * 
-	 * @throws FileNotFoundException
-	 */
+	
 	
 	@SuppressWarnings("unused")
 	public InstructionWindow() throws FileNotFoundException{
