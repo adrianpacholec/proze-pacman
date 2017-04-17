@@ -48,6 +48,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	public MainWindow() {
 
 		super(Config.ApplicationName);
+		
 		setSize(800, 600);
 		setVisible(true);
 		getContentPane().setBackground(Color.BLUE);
@@ -90,7 +91,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		/**
 		 * metoda służąca zmianie wyglądu menu
 		 */
-		nimbus = new JMenuItem("Metal");
+		nimbus = new JMenuItem("Nimbus");
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
