@@ -86,6 +86,7 @@ public class InstructionWindow extends JFrame{
 		textArea.setWrapStyleWord(true);
 		add(scrollPane);
 		
+		
 
 	}
 	
