@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 
+
 public class NickWindow extends JFrame implements ActionListener{
 	
 /**
@@ -69,7 +70,7 @@ public class NickWindow extends JFrame implements ActionListener{
 public NickWindow(){
 	super(Config.UserName);
 	setLayout(new GridLayout(8,1));	
-	setSize(400, 200);
+	setSize(500, 300);
 	
 	/**
 	 * metoda pytająca użytkownika czy jest pewny, że chce skończyć wpisywanie nicku i zgodnie z jego wolą, albo zamyka to okno
@@ -162,13 +163,13 @@ else if(source == ok){
 		JOptionPane.showMessageDialog(null, " Musisz wprowadzić nazwę użytkownika ","Ostrzeżenie",JOptionPane.WARNING_MESSAGE);
 		field.setText("");
 		/**
-		 * ustawienie focusa na pole tekstowe
+		 * ustawienie myszki na pole tekstowe
 		 */
 		field.requestFocus();
 		
 	}
 	else {
-	if (nicktext.length() > 3 && !nicktext.contains(" ") && !nicktext.contains(",") && !nicktext.contains(".") && !nicktext.contains("!") && !nicktext.contains("@") && !nicktext.contains("#") && !nicktext.contains("$") && !nicktext.contains("*") && !nicktext.contains("/") && !nicktext.contains("+") && !nicktext.contains("-") && !nicktext.contains("]")) {
+	if (nicktext.length() > 1 && !nicktext.contains(" ") && !nicktext.contains(",") && !nicktext.contains(".") && !nicktext.contains("!") && !nicktext.contains("@") && !nicktext.contains("#") && !nicktext.contains("$") && !nicktext.contains("*") && !nicktext.contains("/") && !nicktext.contains("+") && !nicktext.contains("-") && !nicktext.contains("]")) {
 	    //make sure that its length is not over 1, and that it has no spaces and no commas 
 	    
 	    JOptionPane.showMessageDialog(null, " Twój nick: " + nicktext ,"Ahoj przygodo!",JOptionPane.INFORMATION_MESSAGE);
@@ -185,15 +186,25 @@ else if(source == ok){
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		game.start();
+		game.run();
 		dispose();
 	     
 	} else {
 	    //if a space or comma was found no matter how big the text it will execute the else.. 
 		JOptionPane.showMessageDialog(null, "Wprowadź nazwę użytkownika jeszcze raz","Ostrzeżenie",JOptionPane.WARNING_MESSAGE);
 	    //field.setText("");
+		
+		/**
+		 * ustawienie myszki na pole tekstowe
+		 */
 		field.requestFocus();
+		/**
+		 * ponowne pobranie tekstu od użytkownika
+		 */
 	    field.getText();
+	    /**
+	     * wyczyszczenie pola tekstwoego
+	     */
 	    field.setText("");
 	}
 	}
