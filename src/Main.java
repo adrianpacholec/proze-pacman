@@ -14,7 +14,7 @@ import java.util.Properties;
 
 public class Main 
 {
-	
+	static int points;
 	/**
      * Wczytanie pliku konfiguracyjnego  Config.properties i utworzenie 
      * na jego podstawie instancji menu głównego
