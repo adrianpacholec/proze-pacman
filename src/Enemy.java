@@ -248,6 +248,7 @@ public void tick(){
 				
 	}
 	
+	
 	/**
 	 * Metoda rysująca reprezentację przeciwnika
 	 * 
