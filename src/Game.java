@@ -29,7 +29,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	/**
 	 * Flaga ozaczająca, czy wątek działa
 	 */
-	private boolean isRunning = false;
+	public boolean isRunning = false;
 	/**
 	 * Główny wątek gry
 	 */
@@ -51,6 +51,8 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	 */
 	public static GUI gui;
 	
+	
+	
 	/**
 	 * Konstruktor przyjmuje String oznaczający nick gracza, ustawia wstępne
 	 * wymiary planszy gry i tworzy obiekt gracza i mapy
@@ -61,9 +63,9 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	public Game(String nicktext) {
 		Dimension dimension = new Dimension(Config.GameWidth, Config.GameHeight);
 		setPreferredSize(dimension);
+		nick = nicktext;
 		player = new Player(Config.GameWidth / 2, Config.GameHeight / 2);
 		mapa = new Mapa(Config.FileMap);
-		nick = nicktext;
 		gui = new GUI();
 		addKeyListener(this);
 		setFocusable(true);
@@ -75,14 +77,16 @@ public class Game extends JPanel implements Runnable, KeyListener {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				repaint();
-				player.update();
+				player.update(nick);
 				//mapa.update();
+				mapa.tick();
 			}
 		}
 		
 		ActionListener listener = new TimeListener();
 		Timer timer = new Timer(1000/60, listener);
 		timer.start();
+		
 
 	}
 
@@ -115,6 +119,13 @@ public class Game extends JPanel implements Runnable, KeyListener {
 		}
 	}
 
+	 private void tick()
+	    {
+	    	player.update(nick);
+	    	mapa.tick();
+	    }
+	
+	
 	/**
 	 * Metoda paint, rysująca grafikę. Tworzy BufferedImage o wymiarach
 	 * początkowych, na podstawie którego tworzony jest kontekst graficzny,
