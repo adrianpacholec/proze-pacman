@@ -1,4 +1,7 @@
-import java.awt.FlowLayout;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,60 +10,85 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-
-
 /**
- * klasa tworz¹ca okno wyswietlaj¹ce siê po zakoñczeniu rozgrywki, podsumowuj¹ca j¹ i dajaca wybór graczu co chce zrobiæ dalej
+ * klasa tworzÄ…ca okno wyswietlajÄ…ce siÄ™ po zakoÅ„czeniu rozgrywki, podsumowujÄ…ca
+ * jÄ… i dajaca wybÃ³r graczu co chce zrobiÄ‡ dalej
+ * 
  * @author Pawel Kowalik
  * @author Adrian Pacholec
  */
-public class Defeat extends JFrame implements ActionListener{
-static int points;
+public class Defeat extends JFrame implements ActionListener {
+
+	/**
+	 * zmienna do okreÅ›lenia wÅ‚asnej czcionki
+	 */
+	private Font Userfont;
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	JButton mainmenu,end;
-	JLabel nicklabel,punkty;
+
+	JButton mainmenu, end;
+	JLabel nicklabel, punktylabel;
+
 	/**
 	 * Constructor klasy Defeat
+	 * 
 	 * @param points
 	 * @param nick
 	 */
-	public Defeat(String nick, int points){
-	super(Config.GameOver);
-		
-	setLayout(new FlowLayout());	
-	setSize(500, 300);
-	
-	nicklabel = new JLabel(Config.ButtonUserName+":"+ nick ,SwingConstants.CENTER);
-	add(nicklabel);
-	
-	punkty = new JLabel("Punkty:"+ points ,SwingConstants.CENTER);
-	add(nicklabel);
-	
-	mainmenu = new JButton("Zacznij od nowa");
-	
-	end = new JButton("Koniec");
-	
-	
-	
-	}
+	public Defeat(String nick, int points) {
+		super(Config.GameOver);
 
+		/**
+		 * ustawienie tÅ‚a okna na niebiesko
+		 */
+		getContentPane().setBackground(Color.BLUE);
+		setLayout(new GridLayout(4, 1));
+		setSize(500, 300);
+		setVisible(true);
+
+		Userfont = new Font("Courier", Font.BOLD, 20);
+
+		// nicklabel.setFont(Userfont);
+		nicklabel = new JLabel(Config.ButtonUserName + ":" + nick, SwingConstants.CENTER);
+		add(nicklabel);
+		nicklabel.setFont(Userfont);
+		nicklabel.setForeground(Color.YELLOW);
+
+		// punktylabel.setFont(Userfont);
+		punktylabel = new JLabel("Punkty:" + points, SwingConstants.CENTER);
+		add(punktylabel);
+		punktylabel.setFont(Userfont);
+		punktylabel.setForeground(Color.YELLOW);
+
+		// mainmenu.setFont(Userfont);
+		mainmenu = new JButton("Zacznij od nowa");
+		add(mainmenu);
+		mainmenu.addActionListener(this);
+
+		end = new JButton("Koniec");
+		add(end);
+		end.addActionListener(this);
+
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == mainmenu)
+
+		Object source = e.getSource();
+
+		{
+			if (source == end)
+				this.dispose();
+			// new MainWindow().setVisible(true);
+		}
+
+		if (source == mainmenu) {
+			this.dispose();
 			new MainWindow().setVisible(true);
-		dispose();
-		
-		if(e.getSource() == end)
-			dispose();
+		}
+
 	}
-	
-	
-	
-	
-	
-	
+
 }
