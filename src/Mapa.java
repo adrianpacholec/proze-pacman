@@ -16,33 +16,42 @@ public class Mapa {
 	/**
 	 * Liczba rzędów bloków
 	 */
-	public int width = 35;
+	public int width = 32;
+
 	/**
 	 * Liczba kolumn bloków
 	 */
-	public int height = 35;
-	
-	
+	public int height = 32;
+
 	/**
 	 * rozmiar mapy
 	 */
 	static public int MapSize;
+
 	/**
 	 * Tablica obiektów typu Tile
 	 */
 	public Tile[][] tiles;
+
 	/**
 	 * Lista obiektów typu Punkt
 	 */
 	public List<Punkt> punkty;
+
 	/**
 	 * Lista obiektów typu Enemy
 	 */
 	public List<Enemy> enemies;
+
 	/**
 	 * Lista obiektów typu Star
 	 */
 	public List<Star> stars;
+
+	/**
+	 * zmienna potrzebna do przekazania predkosci wrogow
+	 */
+	public int speedlevel;
 
 	/**
 	 * Konstruktor obiektu mapy. Wczytuje informację o pozycji danego obiektu na
@@ -53,12 +62,14 @@ public class Mapa {
 	 * 
 	 */
 
-	public Mapa(String path) {
+	public Mapa(String mapaPath, int speedlevel) {
+
+		this.speedlevel = speedlevel;
 		punkty = new ArrayList<>();
 		enemies = new ArrayList<>();
 		stars = new ArrayList<>();
 		try {
-			Scanner in = new Scanner(new File(path));
+			Scanner in = new Scanner(new File(mapaPath));
 			tiles = new Tile[width][height];
 			int yy = 0;
 			while (in.hasNextLine()) {
@@ -70,8 +81,11 @@ public class Mapa {
 					} else if (line.charAt(xx) == 'P') {
 						Game.player.x = xx * 32;
 						Game.player.y = yy * 32;
+						Game.player.newx = xx * 32;
+						Game.player.newy = yy * 32;
+
 					} else if (line.charAt(xx) == 'E') {
-						enemies.add(new Enemy(xx * 32, yy * 32));
+						enemies.add(new Enemy(xx * 32, yy * 32, speedlevel));
 					} else if (line.charAt(xx) == 'S') {
 						stars.add(new Star(xx * 32, yy * 32));
 					} else {
@@ -80,7 +94,7 @@ public class Mapa {
 				}
 				yy++;
 			}
-			System.out.println(yy);
+
 			in.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -88,14 +102,13 @@ public class Mapa {
 		}
 	}
 
-	public void tick(){
-    	for(int i=0;i<enemies.size();i++){
-    		enemies.get(i).tick();
-    	}
-    }
-	
-	
-	
+	public void update() {
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).tick();
+		}
+
+	}
+
 	/**
 	 * Metoda render wywołująca metody render poszczególnych obiektów należących
 	 * do mapy gry
