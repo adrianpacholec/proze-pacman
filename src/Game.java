@@ -15,7 +15,7 @@ import javax.swing.Timer;
 import com.sun.org.glassfish.external.statistics.Statistic;
 
 /**
- * Klasa opisująca panel Swing, w którym odbywa się rysowanie grafiki gry.
+ * Klasa dddopisująca panel Swing, w którym odbywa się rysowanie grafiki gry.
  * Obsługuje jednocześnie część logiki gry związaną z połączeniem innych części
  * w jedno.
  *
