@@ -3,21 +3,26 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 /**
- * Klasa reprezentuj¹ca gwiazdkê, dziedziczy po klasie Rectangle
+ * Klasa reprezentujï¿½ca gwiazdkï¿½, dziedziczy po klasie Rectangle
  *
- * @author Pawe³ Kowalik
+ * @author Paweï¿½ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
 public class Star extends Rectangle {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Konstruktor obiektu gwiazdki
 	 * 
 	 * @param x
-	 *            Pozycja x licz¹c od lewego górenego rogu panelu
+	 *            Pozycja x liczï¿½c od lewego gï¿½renego rogu panelu
 	 * @param y
-	 *            Pozycja y licz¹c od lewego górenego rogu panelu
+	 *            Pozycja y liczï¿½c od lewego gï¿½renego rogu panelu
 	 * 
 	 */
 	public Star(int x, int y) {
@@ -25,7 +30,7 @@ public class Star extends Rectangle {
 	}
 
 	/**
-	 * Metoda rysuj¹ca reprezentacjê gwiazdki
+	 * Metoda rysujï¿½ca reprezentacjï¿½ gwiazdki
 	 * 
 	 * @param g
 	 *            Kontekst graficzny

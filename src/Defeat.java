@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -23,6 +22,11 @@ import javax.swing.SwingConstants;
  * @author Adrian Pacholec
  */
 public class Defeat extends JFrame implements ActionListener {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * zmienna do określenia własnej czcionki

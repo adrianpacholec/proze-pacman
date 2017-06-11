@@ -1,23 +1,19 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import com.sun.org.glassfish.external.statistics.Statistic;
-
 /**
- * Klasa opisuj�ca panel Swing, w kt�rym odbywa si� rysowanie grafiki gry. Zmiana?
- * Obs�uguje jednocze�nie cz�� logiki gry zwi�zan� z po��czeniem innych cz�ci
- * w jedno.
+ * Klasa opisuj�ca panel Swing, w kt�rym odbywa si� rysowanie grafiki gry.
+ * Zmiana? Obs�uguje jednocze�nie cz�� logiki gry zwi�zan� z po��czeniem innych
+ * cz�ci w jedno.
  *
  * @author Pawe� Kowalik
  * @author Adrian Pacholec
@@ -85,7 +81,6 @@ public class Game extends JPanel implements KeyListener {
 	class TimeListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			repaint();
 			mapa.update();
 			player.update(nick);

@@ -9,13 +9,13 @@
 	 * 
 	 * umozliwia wyswietlanie listy najlepsych wynikow zdobytych przez graczy w kilku rozgrywkach
 	 * 
-	 * @author Pawe³ Kowalik
+	 * @author Paweï¿½ Kowalik
 	 * @author Adrian Pacholec
 	 */
 /*	public class Scores extends JFrame{
 		
 		/**
-		 * zmienna typu Scaner pozwalaj¹ca na odczytywanie z pliku 
+		 * zmienna typu Scaner pozwalajï¿½ca na odczytywanie z pliku 
 		 */
 /*		public static Scanner file;
 		
@@ -26,7 +26,7 @@
 		
 		
 		/**
-		 * metoda pozwalaj¹ca na wyswietlanie najlepszych wynikow
+		 * metoda pozwalajï¿½ca na wyswietlanie najlepszych wynikow
 		 * wyniki sa pobierane z pliku tekstowego
 		 */
 /*		public static void begin() {
@@ -62,7 +62,7 @@
 	import javax.swing.JTextArea;
 
 	/**
-	 * Klasa InstructionWindow, która zajmuje siê wyœwietlaniem okna z instrukscj¹ do gry, dziedzicz¹ca po JFrame
+	 * Klasa InstructionWindow, ktï¿½ra zajmuje siï¿½ wyï¿½wietlaniem okna z instrukscjï¿½ do gry, dziedziczï¿½ca po JFrame
 	 * 
 	 * @author Pawel Kowalik
 	 * @author Adrian PAcholec
@@ -73,22 +73,21 @@
 	public class Scores extends JFrame{
 
 		/**
-		 * nieobowi¹zkowy identyfikator klasy
+		 * nieobowiï¿½zkowy identyfikator klasy
 		 */
 		private static final long serialVersionUID = 1L;
 		public static Scanner file;
 		/**
-		 * ScrollPane który umo¿liwia przewijanie okna z instrukcj¹, jeœli jest ona za d³uga by zmieœciæ siê na ekranie
+		 * ScrollPane ktï¿½ry umoï¿½liwia przewijanie okna z instrukcjï¿½, jeï¿½li jest ona za dï¿½uga by zmieï¿½ciï¿½ siï¿½ na ekranie
 		 */
 		private JScrollPane scrollPane;
-		private static String[] wyniki = new String[10]; 
 		
 		/**
-		 * plik z którego bêdziemy odczytywaæ instrukcjê
+		 * plik z ktï¿½rego bï¿½dziemy odczytywaï¿½ instrukcjï¿½
 		 */
 				
 		/**
-		 * pole tekstowe na którym instrukcja bêdzie wyœwietlona
+		 * pole tekstowe na ktï¿½rym instrukcja bï¿½dzie wyï¿½wietlona
 		 */
 		private final JTextArea textArea;
 		
@@ -99,24 +98,24 @@
 		public Scores() throws FileNotFoundException{
 			
 			/**
-			 * utowrzenie okna i nadanie mu rozmiarów oraz po³o¿enia
+			 * utowrzenie okna i nadanie mu rozmiarï¿½w oraz poï¿½oï¿½enia
 			 */
 			super(Config.ButtonHighscores);
 			setSize(500, 500);
 			setLocationRelativeTo(null);
 			
 			/**
-			 * ustawienie by po naciœniêciu przycisku zamykaj¹cego w prawym górnym oknie nic siê z nim nie dzia³o
+			 * ustawienie by po naciï¿½niï¿½ciu przycisku zamykajï¿½cego w prawym gï¿½rnym oknie nic siï¿½ z nim nie dziaï¿½o
 			 */
 			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			
 			/**
-			 * metoda pytaj¹ca u¿ytkownika czy jest pewny, ¿e chce skoñczyæ czytanie insrukcji i zgodnie z jego wol¹, albo zamyka oknoz 
-			 * instrukcj¹ i powraca to g³ównego okna albo pozostaj¹ca w oknie z instrukcj¹
+			 * metoda pytajï¿½ca uï¿½ytkownika czy jest pewny, ï¿½e chce skoï¿½czyï¿½ czytanie insrukcji i zgodnie z jego wolï¿½, albo zamyka oknoz 
+			 * instrukcjï¿½ i powraca to gï¿½ï¿½wnego okna albo pozostajï¿½ca w oknie z instrukcjï¿½
 			 */
 			addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent e){
-					int x = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wróciæ?","", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					int x = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wrï¿½ciï¿½?","", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 					if(x == JOptionPane.YES_OPTION){
 						e.getWindow().dispose();
 						new MainWindow();
@@ -125,7 +124,7 @@
 			});
 			
 			/**
-			 * metody tworz¹ce pole tekstowe wraz z mo¿liwoœci¹ skrolowania w pionie oraz mo¿liwoœci¹ skalowania
+			 * metody tworzï¿½ce pole tekstowe wraz z moï¿½liwoï¿½ciï¿½ skrolowania w pionie oraz moï¿½liwoï¿½ciï¿½ skalowania
 			 */
 			
 			

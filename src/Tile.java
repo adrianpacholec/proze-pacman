@@ -1,24 +1,27 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 /**
- * Klasa reprezentuj¹ca œcianê, dziedziczy po klasie Rectangle
+ * Klasa reprezentujï¿½ca ï¿½cianï¿½, dziedziczy po klasie Rectangle
  *
- * @author Pawe³ Kowalik
+ * @author Paweï¿½ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
 public class Tile extends Rectangle {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int pos[] = new int[2];
 	int map[] = {2,0};
 	/**
-	 * Konstruktor obiektu œciany
+	 * Konstruktor obiektu ï¿½ciany
 	 * 
 	 * @param x
-	 *            Pozycja x licz¹c od lewego górenego rogu panelu
+	 *            Pozycja x liczï¿½c od lewego gï¿½renego rogu panelu
 	 * @param y
-	 *            Pozycja y licz¹c od lewego górenego rogu panelu
+	 *            Pozycja y liczï¿½c od lewego gï¿½renego rogu panelu
 	 * 
 	 */
 	public Tile(int x, int y, int[]pozycja) {
@@ -27,7 +30,7 @@ public class Tile extends Rectangle {
 	}
 
 	/**
-	 * Metoda rysuj¹ca reprezentacjê œciany
+	 * Metoda rysujï¿½ca reprezentacjï¿½ ï¿½ciany
 	 * 
 	 * @param g
 	 *            Kontekst graficzny
