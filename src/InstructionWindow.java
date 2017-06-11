@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
- * Klasa InstructionWindow, ktÃ³ra zajmuje siÄ™ wyÅ›wietlaniem okna z instrukscjÄ… do gry, dziedziczÄ…ca po JFrame
+ * Klasa InstructionWindow, która zajmuje siê wyœwietlaniem okna z instrukscj¹ do gry, dziedzicz¹ca po JFrame
  * 
  * @author Pawel Kowalik
  * @author Adrian PAcholec
@@ -20,23 +20,23 @@ import javax.swing.JTextArea;
 public class InstructionWindow extends JFrame{
 
 	/**
-	 * nieobowiÄ…zkowy identyfikator klasy
+	 * nieobowi¹zkowy identyfikator klasy
 	 */
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * ScrollPane ktÃ³ry umoÅ¼liwia przewijanie okna z instrukcjÄ…, jeÅ›li jest ona za dÅ‚uga by zmieÅ›ciÄ‡ siÄ™ na ekranie
+	 * ScrollPane który umo¿liwia przewijanie okna z instrukcj¹, jeœli jest ona za d³uga by zmieœciæ siê na ekranie
 	 */
 	private JScrollPane scrollPane;
 	
 	/**
-	 * plik z ktÃ³rego bÄ™dziemy odczytywaÄ‡ instrukcjÄ™
+	 * plik z którego bêdziemy odczytywaæ instrukcjê
 	 */
 	private static final String FILENAME = "instrukcja.txt";
 	
 	
 	/**
-	 * pole tekstowe na ktÃ³rym instrukcja bÄ™dzie wyÅ›wietlona
+	 * pole tekstowe na którym instrukcja bêdzie wyœwietlona
 	 */
 	private final JTextArea textArea;
 	
@@ -47,24 +47,24 @@ public class InstructionWindow extends JFrame{
 	public InstructionWindow() throws FileNotFoundException{
 		
 		/**
-		 * utowrzenie okna i nadanie mu rozmiarÃ³w oraz poÅ‚oÅ¼enia
+		 * utowrzenie okna i nadanie mu rozmiarów oraz po³o¿enia
 		 */
 		super(Config.FileInstruction);
 		setSize(500, 500);
 		setLocationRelativeTo(null);
 		
 		/**
-		 * ustawienie by po naciÅ›niÄ™ciu przycisku zamykajÄ…cego w prawym gÃ³rnym oknie nic siÄ™ z nim nie dziaÅ‚o
+		 * ustawienie by po naciœniêciu przycisku zamykaj¹cego w prawym górnym oknie nic siê z nim nie dzia³o
 		 */
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		/**
-		 * metoda pytajÄ…ca uÅ¼ytkownika czy jest pewny, Å¼e chce skoÅ„czyÄ‡ czytanie insrukcji i zgodnie z jego wolÄ…, albo zamyka oknoz 
-		 * instrukcjÄ… i powraca to gÅ‚Ã³wnego okna albo pozostajÄ…ca w oknie z instrukcjÄ…
+		 * metoda pytaj¹ca u¿ytkownika czy jest pewny, ¿e chce skoñczyæ czytanie insrukcji i zgodnie z jego wol¹, albo zamyka oknoz 
+		 * instrukcj¹ i powraca to g³ównego okna albo pozostaj¹ca w oknie z instrukcj¹
 		 */
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e){
-				int x = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wrÃ³ciÄ‡?","", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				int x = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wróciæ?","", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if(x == JOptionPane.YES_OPTION){
 					e.getWindow().dispose();
 					new MainWindow();
@@ -73,7 +73,7 @@ public class InstructionWindow extends JFrame{
 		});
 		
 		/**
-		 * metody tworzÄ…ce pole tekstowe wraz z moÅ¼liwoÅ›ciÄ… skrolowania w pionie oraz moÅ¼liwoÅ›ciÄ… skalowania
+		 * metody tworz¹ce pole tekstowe wraz z mo¿liwoœci¹ skrolowania w pionie oraz mo¿liwoœci¹ skalowania
 		 */
 		@SuppressWarnings("resource")
 		Scanner user_Input = new Scanner(System.in);
@@ -85,7 +85,6 @@ public class InstructionWindow extends JFrame{
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
 		add(scrollPane);
-		
 		
 
 	}

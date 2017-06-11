@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 
 
 /**
- * klasa tworz¹ca okno wyswietlaj¹ce siê po zakoñczeniu wygranej, podsumowuj¹ca j¹ i dajaca wybór graczu co chce zrobiæ dalej
+ * 
  * @author Pawel Kowalik
  * @author Adrian Pacholec
  */
@@ -79,4 +79,3 @@ public class Victory extends JFrame implements ActionListener{
 	
 	
 }
-

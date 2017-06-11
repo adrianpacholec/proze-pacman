@@ -15,35 +15,28 @@ import javax.swing.Timer;
 import com.sun.org.glassfish.external.statistics.Statistic;
 
 /**
- * Klasa dddopisujÄ…ca panel Swing, w ktÃ³rym odbywa siÄ™ rysowanie grafiki gry.
- * ObsÅ‚uguje jednoczeÅ›nie czÄ™Å›Ä‡ logiki gry zwiÄ…zanÄ… z poÅ‚Ä…czeniem innych czÄ™Å›ci
+ * Klasa opisuj¹ca panel Swing, w którym odbywa siê rysowanie grafiki gry.
+ * Obs³uguje jednoczeœnie czêœæ logiki gry zwi¹zan¹ z po³¹czeniem innych czêœci
  * w jedno.
  *
- * @author PaweÅ‚ Kowalik
+ * @author Pawe³ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
 
-public class Game extends JPanel implements Runnable, KeyListener {
-
+public class Game extends JPanel implements KeyListener {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * Flaga ozaczajÄ…ca, czy wÄ…tek dziaÅ‚a
-	 */
-	public static int start;
 	public static boolean gwiazdka;
-	public boolean isRunning = false;
-	/**
-	 * GÅ‚Ã³wny wÄ…tek gry
-	 */
-	private Thread thread;
 	/**
 	 * Nick gracza
 	 */
-	public String nick;
+	public static String nick;
+
+	static int points = 0;
+	static int life = 3;
 
 	/**
 	 * Obiekt gracza
@@ -53,9 +46,11 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	 * Obiekt mapy
 	 */
 	public static Mapa mapa;
+	public static Spritesheet spritesheet;
+	public int map_index;
 
 	/**
-	 * Obiekt reprezentujÄ…cy GUI
+	 * Obiekt reprezentuj¹cy GUI
 	 */
 	public static GUI gui;
 
@@ -68,155 +63,119 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	 */
 
 	/**
-	 * ramka ktÃ³ra zawiera grÄ™
+	 * ramka która zawiera grê
 	 */
 	public JFrame frame;
-
-	public int points;
 
 	public String pointsinString;
 	/**
 	 * sciezka do pliku gdzie znajduje sie mapa, sluzaca do zmieniania mapy po
 	 * przejsciu obecnej
 	 */
-	public static String mapaPath;
+	public static String[] mapaPath;
 
 	/**
-	 * Konstruktor przyjmuje String oznaczajÄ…cy nick gracza, ustawia wstÄ™pne
+	 * Konstruktor przyjmuje String oznaczaj¹cy nick gracza, ustawia wstêpne
 	 * wymiary planszy gry i tworzy obiekt gracza i mapy
 	 * 
 	 * @param nicktext
 	 *            Nick gracza
 	 */
-	public Game(String nicktext, int speedlevel, JFrame frame, String mapaPath, int points) {
-		this.points = points;
+
+	class TimeListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			repaint();
+			mapa.update();
+			player.update(nick);
+		}
+	}
+
+	ActionListener listener = new TimeListener();
+	Timer timer = new Timer(1000 / 60, listener);
+
+	public Game(String nicktext, int speedlevel, JFrame frame, String[] mapaPath, int map, int points) {
+		Game.points = points;
 		Game.mapaPath = mapaPath;
 		this.frame = frame;
 		this.speedlevel = speedlevel;
-
+		this.map_index = map;
 		Dimension dimension = new Dimension(Config.GameWidth, Config.GameHeight);
 		setPreferredSize(dimension);
 		nick = nicktext;
-		player = new Player(Config.GameWidth / 2, Config.GameHeight / 2, speedlevel, this, frame, nick, mapaPath);
-		mapa = new Mapa(mapaPath, speedlevel);
+		player = new Player(Config.GameWidth / 2, Config.GameHeight / 2, speedlevel, this, frame);
+		mapa = new Mapa(mapaPath[map_index++], speedlevel);
+		spritesheet = new Spritesheet("/sprites/terrain.png");
 
 		gui = new GUI();
 		addKeyListener(this);
 		setFocusable(true);
-
-		class TimeListener implements ActionListener {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				repaint();
-				mapa.update();
-				player.update(nick);
-
-				// gui.render(nicktext, points);
-				// mapa2.update();
-				// mapa.tick();
-			}
-		}
-
-		ActionListener listener = new TimeListener();
-		Timer timer = new Timer(1000 / 60, listener);
 		timer.start();
 
 	}
 
 	/**
-	 * Metoda odpowiedzialna za rozpoczÄ™cie pracy wÄ…tku odpowiedzialnego za
-	 * rysowanie
+	 * Metoda koñcz¹ca pracê programu
 	 */
 
-	@Override
-	public void run() {
-		if (isRunning)
-			return;
-		isRunning = true;
-		thread = new Thread(this);
-		thread.start();
-		setFocusable(true);
-	}
-
-	/**
-	 * Metoda koÅ„czÄ…ca pracÄ™ programu, gdy flaga isRunning
-	 */
 	public synchronized void stop() {
-		if (!isRunning)
-			return;
-		isRunning = false;
-		try {
-			if (Player.win) {
-
-				frame.dispose();
-				this.setVisible(false);
-				Victory victory = new Victory(nick, player.getScore());
-				player.points = 0;
-				player.life = 3;
-			} else {
-				frame.dispose();
-				this.setVisible(false);
-				Defeat defeat = new Defeat(nick, player.getScore());
-				player.points = 0;
-				player.life = 3;
-			}
-
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		timer.stop();
+		frame.dispose();
+		if (Player.win && map_index != mapaPath.length) {
+			nextLevel();
+			// Victory victory = new Victory(nick, points);
+		} else {
+			this.setVisible(false);
+			// Defeat defeat = new Defeat(nick, points);
 		}
 	}
 
-	/*
-	 * public void nextLevel(){ this.setVisible(false); Game game2 = new
-	 * Game(nick, speedlevel, frame, Config.FileMap2, points); frame.add(game2);
-	 * frame.pack(); frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	 * frame.setLocationRelativeTo(null); frame.setVisible(true); game2.run(); }
-	 */
+	public void nextLevel() {
+		this.setVisible(false);
+		Game game2 = new Game(nick, speedlevel, frame, mapaPath, map_index, points);
+		frame.add(game2);
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
 
 	/**
-	 * Metoda paint, rysujÄ…ca grafikÄ™. Tworzy BufferedImage o wymiarach
-	 * poczÄ…tkowych, na podstawie ktÃ³rego tworzony jest kontekst graficzny,
+	 * Metoda paint, rysuj¹ca grafikê. Tworzy BufferedImage o wymiarach
+	 * pocz¹tkowych, na podstawie którego tworzony jest kontekst graficzny,
 	 * przekazywany do drugiego bufora, o rozmiarach takich, jak JPanel. W ten
-	 * sposÃ³b generowana grafika rozciÄ…gana jest do aktualnych rozmiarÃ³w okna.
+	 * sposób generowana grafika rozci¹gana jest do aktualnych rozmiarów okna.
 	 * 
 	 * @param g
 	 *            Kontekst graficzny
 	 * 
-	 */
-	public void paint(Graphics g) {
-
-		BufferedImage dbImage = new BufferedImage(Config.GameWidth, Config.GameHeight, BufferedImage.TYPE_INT_ARGB);
-		Graphics dbg = dbImage.getGraphics();
-		paintComponent(dbg);
-
-		BufferedImage scaled = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D gg = scaled.createGraphics();
-		gg.drawImage(dbImage, 0, 0, getWidth(), getHeight(), null);
-		g.drawImage(scaled, 0, 0, this);
-
-	}
-
-	/**
-	 * Metoda paintComponenet, wywoÅ‚ywana jest z metody paint - przy kaÅ¼dym jej
-	 * wywoÅ‚aniu rysuje tÅ‚o planszy, a takÅ¼e wywoÅ‚uje metody render() jej
-	 * skÅ‚adowych
+	 *            /** Metoda paintComponenet, wywo³ywana jest z metody paint -
+	 *            przy ka¿dym jej wywo³aniu rysuje t³o planszy, a tak¿e wywo³uje
+	 *            metody render() jej sk³adowych
 	 * 
 	 * @param g
 	 *            Kontekst graficzny
 	 * 
 	 */
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Config.GameWidth, Config.GameHeight);
-		mapa.render(g);
-		player.render(g);
-		gui.render(g, nick, player.getScore());
-		g.dispose();
+		BufferedImage bufor1 = new BufferedImage(Config.GameWidth, Config.GameHeight, BufferedImage.TYPE_INT_ARGB);
+		Graphics dbg = bufor1.getGraphics();
+
+		super.paintComponent(dbg);
+		dbg.setColor(Color.black);
+		dbg.fillRect(0, 0, Config.GameWidth, Config.GameHeight);
+		mapa.render(dbg);
+		player.render(dbg);
+		gui.render(dbg, nick, points);
+		dbg.dispose();
 		setFocusable(true);
+
+		BufferedImage bufor2 = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics gg = bufor2.getGraphics();
+		gg.drawImage(bufor1, 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(bufor2, 0, 0, this);
+
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -232,7 +191,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	}
 
 	/**
-	 * metoda, ktÃ³ra reaguje na zwolnienie klawisza true na false i zatrzymujÄ…ca
+	 * metoda, która reaguje na zwolnienie klawisza true na false i zatrzymuj¹ca
 	 * pacmana
 	 */
 	public void keyReleased(KeyEvent e) {

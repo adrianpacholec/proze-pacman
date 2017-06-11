@@ -1,9 +1,14 @@
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,7 +32,8 @@ public class Defeat extends JFrame implements ActionListener {
 	/**
 	 * 
 	 */
-
+	public static Komparator komp;
+	// public List<Record> records;
 	JButton mainmenu, end;
 	JLabel nicklabel, punktylabel;
 
@@ -77,7 +83,7 @@ public class Defeat extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		Object source = e.getSource();
-
+		highscore();
 		{
 			if (source == end)
 				this.dispose();
@@ -91,4 +97,46 @@ public class Defeat extends JFrame implements ActionListener {
 
 	}
 
+	public void highscore() {
+		ArrayList<Record> records = new ArrayList<>();
+
+			
+			System.out.println(Game.nick + Game.points);
+			try {
+				Scanner file = new Scanner(new File(Config.FileHighscore));
+				while (file.hasNextLine()) {
+
+					String[] czesci = file.nextLine().split(" ");
+					records.add(new Record(czesci[0], Integer.parseInt(czesci[1])));
+					System.out.println("rozmiar records:" + records.size());
+					
+				}
+				file.close();
+			} catch (Exception e1) {
+				System.out.println("brak pliku");
+			}
+			records.add(new Record(Game.nick, Game.points));
+			Komparator komp = new Komparator();
+			Collections.sort(records, komp);
+			System.out.println(records.get(0).name);
+			System.out.println(records.size());
+			System.out.println(records.get(records.size() - 1).name);
+			records.remove(records.size() - 1);
+			System.out.println(records.size());
+
+			try {
+
+				PrintWriter writer = new PrintWriter(Config.FileHighscore);
+
+				for (int i = 0; i < records.size(); i++) {
+					writer.println(records.get(i).name + " " + records.get(i).score);
+
+				}
+
+				writer.close();
+			} catch (Exception e1) {
+				System.out.print("brak pliku");
+			}
+		
+	}
 }

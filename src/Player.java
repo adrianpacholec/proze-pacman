@@ -8,36 +8,37 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- * Klasa reprezentujÄ…ca gracza, dziedziczy po klasie Rectangle
+ * Klasa reprezentuj¹ca gracza, dziedziczy po klasie Rectangle
  *
- * @author PaweÅ‚ Kowalik
+ * @author Pawe³ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
 public class Player extends Rectangle {
 	/**
-	 * punkty gromadzone przez gracza po zebraniu punktÃ³w, ich liczba na
-	 * poczÄ…tku wynosi 0
+	 * punkty gromadzone przez gracza po zebraniu punktów, ich liczba na
+	 * pocz¹tku wynosi 0
 	 */
-	public static int points = 0;
-	public static int life = 3;
+
 	/**
-	 * zmienna przechowujÄ…ca liczbÄ™ Å¼yÄ‡ gracza
+	 * zmienna przechowuj¹ca liczbê ¿yæ gracza
 	 */
-	public static boolean win;
+    public static boolean win;
 
 	/**
 	 * obiekt gry
 	 */
-	public JFrame frame;
+    public JFrame frame;
+	
 
 	public int newx;
-	public int newy;
+	public int newy; 
+	private int start_star;
 	/**
 	 * 
 	 */
-	public static Game game;
-
+	public Game game;
+	
 	/**
 	 * zmienna potrzebna do przekazania predkosci wrogow
 	 */
@@ -46,46 +47,48 @@ public class Player extends Rectangle {
 
 	public String nick;
 
-	public String mapaPath;
 
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * zmienne sÅ‚uÅ¼Ä…ce do obsÅ‚ugi ruchu pacmana
+	 * zmienne s³u¿¹ce do obs³ugi ruchu pacmana
 	 */
 	public boolean right, left, down, up;
 
+	
+	
 	/**
 	 * Konstruktor obiektu gracza
 	 * 
 	 * @param x
-	 *            Pozycja x liczÄ…c od lewego gÃ³renego rogu panelu
+	 *            Pozycja x licz¹c od lewego górenego rogu panelu
 	 * @param y
-	 *            Pozycja y liczÄ…c od lewego gÃ³renego rogu panelu
+	 *            Pozycja y licz¹c od lewego górenego rogu panelu
 	 * 
 	 */
-	public Player(int x, int y, int speedlevel, Game game, JFrame frame, String nick, String mapaPath) {
+	public Player(int x, int y, int speedlevel, Game game, JFrame frame) {
 		this.game = game;
-		this.mapaPath = mapaPath;
+
 		this.frame = frame;
-		this.nick = nick;
 		this.speedlevel = speedlevel;
 		setBounds(x, y, 32, 32);
 	}
 
 	/**
-	 * Metoda rysujÄ…ca reprezentacjÄ™ gracza
+	 * Metoda rysuj¹ca reprezentacjê gracza
 	 * 
 	 * @param g
 	 *            Kontekst graficzny
 	 * 
 	 */
 	public void render(Graphics g) {
-		if (!Game.gwiazdka)
+		/*if (!Game.gwiazdka)
 			g.setColor(Color.yellow);
 		else
 			g.setColor(Color.green);
-		g.fillRect(x, y, width, height);
+			*/
+		g.fillRect(x,y,32,32);
 
 	}
 
@@ -103,12 +106,11 @@ public class Player extends Rectangle {
 			y += Config.PacmanSpeed;
 
 		Mapa mapa = Game.mapa;
-
+				
 		for (int i = 0; i < Game.mapa.stars.size(); i++) {
 			if (this.intersects(Game.mapa.stars.get(i))) {
 				Game.mapa.stars.remove(i);
-				System.out.println("Gwiazdka!");
-				Game.start = (int) System.currentTimeMillis();
+				start_star = (int) System.currentTimeMillis();
 				Game.gwiazdka = true;
 				break;
 
@@ -119,38 +121,31 @@ public class Player extends Rectangle {
 		for (int i = 0; i < Game.mapa.punkty.size(); i++) {
 			if (this.intersects(Game.mapa.punkty.get(i))) {
 				Game.mapa.punkty.remove(i);
-				points += 1;
+				Game.points += 1;
 				break;
 			}
 		}
-		if (Game.mapa.punkty.size() == 0 && Game.mapa.stars.size() == 0) {
-
-			/*
-			 * game.setVisible(false); Game game2 = new Game(nick, speedlevel,
-			 * frame, Config.FileMap2, points); frame.add(game2); frame.pack();
-			 * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			 * frame.setLocationRelativeTo(null); frame.setVisible(true);
-			 * game2.run();//
-			 * 
-			 */
-			game.stop();
-			win = true;
-
-		}
-
+			if (Game.mapa.punkty.size() == 0 && Game.mapa.stars.size() == 0) {
+				win = true;
+				game.stop();
+			}
+		
 		for (int i = 0; i < Game.mapa.enemies.size(); i++) {
 			if (this.intersects(Game.mapa.enemies.get(i))) {
 				if (!Game.gwiazdka) {
-					// lifes = new ArrayList<Int>;
-					life--;
+					//lifes = new ArrayList<Int>;
+					Game.life--;
 					Game.player.left = false;
 					Game.player.right = false;
 					Game.player.up = false;
 					Game.player.down = false;
 					Game.player.moveTo(Game.player.newx, Game.player.newy);
-					if (life == 0) {
-						game.stop();
+					
+					if (Game.life == 0) 
+					{
 						win = false;
+						game.stop();
+						
 					}
 				} else
 					Game.mapa.enemies.remove(i);
@@ -161,13 +156,13 @@ public class Player extends Rectangle {
 
 		// odliczaj
 
-		if ((int) System.currentTimeMillis() - Game.start >= 5000)
+		if ((int) System.currentTimeMillis() - start_star >= 5000)
 			Game.gwiazdka = false;
 
 	}
 
 	/**
-	 * metoda sprawdzajÄ…ca czy pacman nie wchodzi w Å›cianÄ™, odpowiadajÄ…ca za
+	 * metoda sprawdzaj¹ca czy pacman nie wchodzi w œcianê, odpowiadaj¹ca za
 	 * ruch pacmana
 	 * 
 	 * @param nextx
@@ -176,7 +171,7 @@ public class Player extends Rectangle {
 	 */
 
 	public boolean canMove(int nextx, int nexty) {
-		Rectangle bounds = new Rectangle(nextx, nexty, 29, 29);
+		Rectangle bounds = new Rectangle(nextx, nexty, 30, 30);
 		Mapa mapa = Game.mapa;
 		for (int xxx = 0; xxx < Game.mapa.tiles.length; xxx++)
 			for (int yyy = 0; yyy < Game.mapa.tiles[0].length; yyy++) {
@@ -191,11 +186,6 @@ public class Player extends Rectangle {
 		return true;
 
 	}
-
-	public int getScore() {
-		return points;
-	}
-
 	public void moveTo(int x, int y) {
 		this.x = x;
 		this.y = y;

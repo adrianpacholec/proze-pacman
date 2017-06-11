@@ -6,9 +6,9 @@ import java.util.Random;
 
 
 /**
- * Klasa reprezentujÄ…ca przeciwnika, dziedziczy po klasie Rectangle
+ * Klasa reprezentuj¹ca przeciwnika, dziedziczy po klasie Rectangle
  *
- * @author PaweÅ‚ Kowalik
+ * @author Pawe³ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
@@ -27,7 +27,7 @@ public class Enemy extends Rectangle {
 	private int state=smart;
 	
 	/**
-	 * zmienne wyliczeniowe okreÅ›lajÄ…ce ruch przeciwnika
+	 * zmienne wyliczeniowe okreœlaj¹ce ruch przeciwnika
 	 */
 	private int right=0, left=1, up=2, down = 3;
 	/**
@@ -48,17 +48,22 @@ public class Enemy extends Rectangle {
 	
 	private int lastDir = -1;
 	
+	/**
+	 * zmienna potrzebna do przekazania predkosci wrogow
+	 */
+	public int speedlevel;
 	
 	/**
 	 * Konstruktor obiektu przeciwnika
 	 * 
 	 * @param x
-	 *            Pozycja x liczÄ…c od lewego gÃ³renego rogu panelu
+	 *            Pozycja x licz¹c od lewego górenego rogu panelu
 	 * @param y
-	 *            Pozycja y liczÄ…c od lewego gÃ³renego rogu panelu
+	 *            Pozycja y licz¹c od lewego górenego rogu panelu
 	 * 
 	 */
-	public Enemy(int x, int y) {
+	public Enemy(int x, int y, int speedlevel) {
+		this.speedlevel = speedlevel;
 		random2=new Random();
 		setBounds(x, y, 32, 32);
 		dir=random2.nextInt(4);
@@ -66,9 +71,11 @@ public class Enemy extends Rectangle {
 
 	
 	/**
-	 * metoda odpowiadajÄ…ca za ruch przeciwnikÃ³w i ich sztucznÄ… inteligencjÄ™ by poruszaÅ‚y siÄ™ za pacmanem
+	 * metoda odpowiadaj¹ca za ruch przeciwników i ich sztuczn¹ inteligencjê by porusza³y siê za pacmanem
 	 */
 public void tick(){
+	
+	if (Game.gwiazdka) state=random;
     	
     	if(state==random){
     		
@@ -114,7 +121,7 @@ public void tick(){
     			}
     		}
     			/**
-    			 * poruszanie siÄ™ przeciwnika za pacmanem
+    			 * poruszanie siê przeciwnika za pacmanem
     			 */
     		}else if(state==smart){
     			
@@ -223,34 +230,25 @@ public void tick(){
     	}
     	
     
+public boolean canMove(int nextx,int nexty){
+	Rectangle bounds = new Rectangle (nextx,nexty,32,32);
+	Mapa mapa = Game.mapa;
 	
 	
-	
-	
-	public boolean canMove(int nextx,int nexty){
-		Rectangle bounds = new Rectangle (nextx,nexty,32,32);
-		Mapa mapa = Game.mapa;
-		
-		
-		for (int xxx=0; xxx<Mapa.MapSize; xxx++)
-            for(int yyy=0;yyy<Mapa.MapSize;yyy++){
-				if(mapa.tiles[xxx][yyy] != null){
-					if(bounds.intersects(mapa.tiles[xxx][yyy])){
-						return false;
-						
-					}
+	for (int xx=0; xx<mapa.tiles.length; xx++)
+        for(int yy=0;yy<mapa.tiles[0].length; yy++){
+			if(mapa.tiles[xx][yy] != null){
+				if(bounds.intersects(mapa.tiles[xx][yy])){
+					return false;
 				}
-		}
-		
-		
-		return true;
-				
-				
-	}
+				}
+			}
 	
+	return true;
+}	
 	
 	/**
-	 * Metoda rysujÄ…ca reprezentacjÄ™ przeciwnika
+	 * Metoda rysuj¹ca reprezentacjê przeciwnika
 	 * 
 	 * @param g
 	 *            Kontekst graficzny

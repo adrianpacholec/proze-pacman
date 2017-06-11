@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -187,7 +190,11 @@ public class NickWindow extends JFrame implements ActionListener {
 					 */
 
 					JFrame frame = new JFrame();
-					Game game = new Game(nicktext, spdlevel, frame, Config.FileMap, points);
+					List<String> list = new ArrayList();
+					String[] mapy = Config.FileMap.split(" ");
+					//int map_index = mapy.length;
+					int map_index = 0;
+					Game game = new Game(nicktext, spdlevel, frame, mapy, map_index, points);
 					frame.setTitle(Config.ApplicationName);
 					frame.add(game);
 					// frame.setResizable(true);
@@ -195,7 +202,7 @@ public class NickWindow extends JFrame implements ActionListener {
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
-					game.run();
+					//game.run();
 					dispose();
 
 				} else {

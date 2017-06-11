@@ -15,9 +15,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * 
- * Klasa opisujÄ…ca i tworzÄ…ca menu gÅ‚Ã³wne gry, w ktÃ³rym sÄ… przyciski do
- * rozpoczÄ™cia nowej gry, wyswietlenia instrukcji i najlepszych wynikÃ³w oraz
- * moÅ¼liwoÅ›ci zakoÅ„czenia gry
+ * Klasa opisuj¹ca i tworz¹ca menu g³ówne gry, w którym s¹ przyciski do
+ * rozpoczêcia nowej gry, wyswietlenia instrukcji i najlepszych wyników oraz
+ * mo¿liwoœci zakoñczenia gry
  * 
  * @author Pawel Kowalik
  * @author Adrian Pacholec
@@ -28,12 +28,12 @@ public class MainWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	/**
-	 * nieobowiÄ…zkowy identyfikator klasy
+	 * nieobowi¹zkowy identyfikator klasy
 	 */
 
 	private JButton new_game, highscore, instruction, exit;
 	/**
-	 * przyciski z menu gÅ‚ownego
+	 * przyciski z menu g³ownego
 	 */
 
 	JMenuItem nimbus;
@@ -43,7 +43,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	 */
 
 	/**
-	 * konstruktor menu glÃ³wnego
+	 * konstruktor menu glównego
 	 */
 	public MainWindow() {
 
@@ -55,16 +55,16 @@ public class MainWindow extends JFrame implements ActionListener {
 		/**
 		 * ustwienie layoutu gridlayout, 4 przyciski w pionie
 		 */
-		setLayout(new GridLayout(4, 1));
+		setLayout(new GridLayout(4,1));
 		/**
-		 * metoda pytajÄ…ca uÅ¼ytkownika czy jest pewny, Å¼e chce zakoÅ„czyÄ‡ grÄ™ i
-		 * zgodnie z jego wolÄ…, albo zamyka okno z men
+		 * metoda pytaj¹ca u¿ytkownika czy jest pewny, ¿e chce zakoñczyæ grê i
+		 * zgodnie z jego wol¹, albo zamyka okno z men
 		 *
 		 */
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				int x = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wyjÅ›Ä‡?", "", JOptionPane.YES_NO_OPTION,
+				int x = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wyjœæ?", "", JOptionPane.YES_NO_OPTION,
 						JOptionPane.INFORMATION_MESSAGE);
 				if (x == JOptionPane.YES_OPTION) {
 					e.getWindow().dispose();
@@ -89,7 +89,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		exit.addActionListener(this);
 
 		/**
-		 * metoda sÅ‚uÅ¼Ä…ca zmianie wyglÄ…du menu
+		 * metoda s³u¿¹ca zmianie wygl¹du menu
 		 */
 		nimbus = new JMenuItem("Nimbus");
 		try {
@@ -106,16 +106,16 @@ public class MainWindow extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * metoda dajÄ…ca przyciskom reakcje na wolÄ™ uÅ¼ytkownika
+	 * metoda daj¹ca przyciskom reakcje na wolê u¿ytkownika
 	 */
 	public void actionPerformed(ActionEvent e) {
 		/**
-		 * stworzenie obiektu ktÃ³ry bÄ™dzie reagowaÅ‚ na nasze klikniÄ™cia
+		 * stworzenie obiektu który bêdzie reagowa³ na nasze klikniêcia
 		 */
 		Object source = e.getSource();
 
 		/**
-		 * jesli zrodÅ‚em jest przycisk nowej gry to tworzone jest okno z wyborem
+		 * jesli zrod³em jest przycisk nowej gry to tworzone jest okno z wyborem
 		 * nicku, a to okno porzucane
 		 */
 		if (source == new_game) {
@@ -125,12 +125,12 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 
 		/**
-		 * jesli zrodÅ‚em jest przycisk koÅ„ca to uÅ¼ytkownuk pytany jest czy jest
-		 * tego pewien i albo zamykane jest menu gÅ‚Ã³wne albo nic siÄ™ z nim nie
+		 * jesli zrod³em jest przycisk koñca to u¿ytkownuk pytany jest czy jest
+		 * tego pewien i albo zamykane jest menu g³ówne albo nic siê z nim nie
 		 * dzieje
 		 */
 		else if (source == exit) {
-			int answer = JOptionPane.showConfirmDialog(null, "Czy jesteÅ› pewien ?", "Pytanie",
+			int answer = JOptionPane.showConfirmDialog(null, "Czy jesteœ pewien ?", "Pytanie",
 					JOptionPane.YES_NO_OPTION);
 			if (answer == JOptionPane.YES_OPTION) {
 				JOptionPane.showMessageDialog(null, "Do Zobaczenia");
@@ -138,10 +138,10 @@ public class MainWindow extends JFrame implements ActionListener {
 			} else if (answer == JOptionPane.NO_OPTION)
 				JOptionPane.showMessageDialog(null, "Dobra decyzja");
 			else if (answer == JOptionPane.CLOSED_OPTION)
-				JOptionPane.showMessageDialog(null, "Tak nie robimy", "OstrzeÄ¹Ä½enie", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Tak nie robimy", "Ostrze¿enie", JOptionPane.WARNING_MESSAGE);
 		}
 		/**
-		 * jesli zrÃ³dlem jest przycisk instrukcji do gry, to jest ona
+		 * jesli zródlem jest przycisk instrukcji do gry, to jest ona
 		 * wyswietlana
 		 */
 		else if (source == instruction) {
@@ -158,9 +158,14 @@ public class MainWindow extends JFrame implements ActionListener {
 		 * w oddzielnym oknie
 		 */
 		else if (source == highscore) {
-			JOptionPane.showMessageDialog(null, "Ta opcja jeszcze nie jest dostÄ™pna");
-
+			try {
+				new Scores().setVisible(true);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			setVisible(false);
+		}
 		}
 	}
 
-}
+

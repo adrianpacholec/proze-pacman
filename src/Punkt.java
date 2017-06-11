@@ -3,9 +3,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 /**
- * Klasa reprezentujÄ…ca punkt, dziedziczy po klasie Rectangle
+ * Klasa reprezentuj¹ca punkt, dziedziczy po klasie Rectangle
  *
- * @author PaweÅ‚ Kowalik
+ * @author Pawe³ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
@@ -15,9 +15,9 @@ public class Punkt extends Rectangle {
 	 * Konstruktor obiektu punktu
 	 * 
 	 * @param x
-	 *            Pozycja x liczÄ…c od lewego gÃ³renego rogu panelu
+	 *            Pozycja x licz¹c od lewego górenego rogu panelu
 	 * @param y
-	 *            Pozycja y liczÄ…c od lewego gÃ³renego rogu panelu
+	 *            Pozycja y licz¹c od lewego górenego rogu panelu
 	 * 
 	 */
 	public Punkt(int x, int y) {
@@ -25,7 +25,7 @@ public class Punkt extends Rectangle {
 	}
 
 	/**
-	 * Metoda rysujÄ…ca reprezentacjÄ™ punktu
+	 * Metoda rysuj¹ca reprezentacjê punktu
 	 * 
 	 * @param g
 	 *            Kontekst graficzny
