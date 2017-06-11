@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import java.awt.Dimension;
 
 public class NickWindow extends JFrame implements ActionListener {
 
@@ -193,7 +194,8 @@ public class NickWindow extends JFrame implements ActionListener {
 					Game game = new Game(nicktext, spdlevel, frame, mapy, map_index, points);
 					frame.setTitle(Config.ApplicationName);
 					frame.add(game);
-					// frame.setResizable(true);
+					Dimension dimension = new Dimension(Config.GameWidth, Config.GameHeight);
+					frame.setPreferredSize(dimension);
 					frame.pack();
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					frame.setLocationRelativeTo(null);

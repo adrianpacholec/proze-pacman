@@ -3,7 +3,7 @@ import java.util.Properties;
 
 /**
  * 
- * G≥Ûwna klasa naszej gry PACMAN
+ * G≈Ç√≥wna klasa gry Pacman
  * 
  * 
  * @author Pawel Kowalik
@@ -17,7 +17,7 @@ public class Main
 	static int points;
 	/**
      * Wczytanie pliku konfiguracyjnego  Config.properties i utworzenie 
-     * na jego podstawie instancji menu g≥Ûwnego
+     * na jego podstawie instancji menu g≈Ç√≥wnego
      *
      * @param args argumenty przekazane do aplikacji
      */

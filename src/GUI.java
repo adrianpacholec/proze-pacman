@@ -3,21 +3,21 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 /**
- * Klasa reprezentuj¹ca interfejs graficzny u¿ytkownika
+ * Klasa reprezentujï¿½ca interfejs graficzny uï¿½ytkownika
  *
- * @author Pawe³ Kowalik
+ * @author Paweï¿½ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
 
 public class GUI {
 	/**
-	 * Metoda rysuj¹ca elementy interfejsu graficznego
+	 * Metoda rysujÄ…ca elementy interfejsu graficznego
 	 * 
 	 * @param g
 	 *            Kontekst graficzny
 	 * @param nick
-	 *            Nick u¿ytkownika
+	 *            Nick uï¿½ytkownika
 	 * 
 	 */
 	public void render(Graphics g, String nick, int points) {
@@ -30,7 +30,7 @@ public class GUI {
 		g.setColor(Color.white);
 		g.setFont(new Font(Font.DIALOG, Font.BOLD, 19));
 		g.drawString("Punkty: " + String.valueOf(points), 15, 25);
-		g.drawString("Twój nick to: " + nick, 200, 470);
+		g.drawString("TwÃ³j nick to: " + nick, 200, 470);
 		//}
 		
 		/*if(Player.life == 2){

@@ -1,5 +1,5 @@
 import java.awt.Color;
-import java.awt.Dimension;
+
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -96,8 +96,8 @@ public class Game extends JPanel implements KeyListener {
 		this.frame = frame;
 		this.speedlevel = speedlevel;
 		this.map_index = map;
-		Dimension dimension = new Dimension(Config.GameWidth, Config.GameHeight);
-		setPreferredSize(dimension);
+		//Dimension dimension = new Dimension(Config.GameWidth, Config.GameHeight);
+		//setPreferredSize(dimension);
 		nick = nicktext;
 		player = new Player(Config.GameWidth / 2, Config.GameHeight / 2, speedlevel, this, frame);
 		mapa = new Mapa(mapaPath[map_index++], speedlevel);
@@ -130,7 +130,6 @@ public class Game extends JPanel implements KeyListener {
 		this.setVisible(false);
 		Game game2 = new Game(nick, speedlevel, frame, mapaPath, map_index, points);
 		frame.add(game2);
-		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);

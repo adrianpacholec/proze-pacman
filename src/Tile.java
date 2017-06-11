@@ -14,7 +14,7 @@ public class Tile extends Rectangle {
 	 */
 	private static final long serialVersionUID = 1L;
 	int pos[] = new int[2];
-	int map[] = {2,0};
+	int map[] = {1,0};
 	/**
 	 * Konstruktor obiektu �ciany
 	 * 
