@@ -15,11 +15,11 @@ import javax.swing.Timer;
 import com.sun.org.glassfish.external.statistics.Statistic;
 
 /**
- * Klasa opisuj¹ca panel Swing, w którym odbywa siê rysowanie grafiki gry.
- * Obs³uguje jednoczeœnie czêœæ logiki gry zwi¹zan¹ z po³¹czeniem innych czêœci
+ * Klasa opisujï¿½ca panel Swing, w ktï¿½rym odbywa siï¿½ rysowanie grafiki gry. Zmiana?
+ * Obsï¿½uguje jednoczeï¿½nie czï¿½ï¿½ logiki gry zwiï¿½zanï¿½ z poï¿½ï¿½czeniem innych czï¿½ci
  * w jedno.
  *
- * @author Pawe³ Kowalik
+ * @author Paweï¿½ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
@@ -50,7 +50,7 @@ public class Game extends JPanel implements KeyListener {
 	public int map_index;
 
 	/**
-	 * Obiekt reprezentuj¹cy GUI
+	 * Obiekt reprezentujï¿½cy GUI
 	 */
 	public static GUI gui;
 
@@ -63,7 +63,7 @@ public class Game extends JPanel implements KeyListener {
 	 */
 
 	/**
-	 * ramka która zawiera grê
+	 * ramka ktï¿½ra zawiera grï¿½
 	 */
 	public JFrame frame;
 
@@ -75,7 +75,7 @@ public class Game extends JPanel implements KeyListener {
 	public static String[] mapaPath;
 
 	/**
-	 * Konstruktor przyjmuje String oznaczaj¹cy nick gracza, ustawia wstêpne
+	 * Konstruktor przyjmuje String oznaczajï¿½cy nick gracza, ustawia wstï¿½pne
 	 * wymiary planszy gry i tworzy obiekt gracza i mapy
 	 * 
 	 * @param nicktext
@@ -116,7 +116,7 @@ public class Game extends JPanel implements KeyListener {
 	}
 
 	/**
-	 * Metoda koñcz¹ca pracê programu
+	 * Metoda koï¿½czï¿½ca pracï¿½ programu
 	 */
 
 	public synchronized void stop() {
@@ -142,17 +142,17 @@ public class Game extends JPanel implements KeyListener {
 	}
 
 	/**
-	 * Metoda paint, rysuj¹ca grafikê. Tworzy BufferedImage o wymiarach
-	 * pocz¹tkowych, na podstawie którego tworzony jest kontekst graficzny,
+	 * Metoda paint, rysujï¿½ca grafikï¿½. Tworzy BufferedImage o wymiarach
+	 * poczï¿½tkowych, na podstawie ktï¿½rego tworzony jest kontekst graficzny,
 	 * przekazywany do drugiego bufora, o rozmiarach takich, jak JPanel. W ten
-	 * sposób generowana grafika rozci¹gana jest do aktualnych rozmiarów okna.
+	 * sposï¿½b generowana grafika rozciï¿½gana jest do aktualnych rozmiarï¿½w okna.
 	 * 
 	 * @param g
 	 *            Kontekst graficzny
 	 * 
-	 *            /** Metoda paintComponenet, wywo³ywana jest z metody paint -
-	 *            przy ka¿dym jej wywo³aniu rysuje t³o planszy, a tak¿e wywo³uje
-	 *            metody render() jej sk³adowych
+	 *            /** Metoda paintComponenet, wywoï¿½ywana jest z metody paint -
+	 *            przy kaï¿½dym jej wywoï¿½aniu rysuje tï¿½o planszy, a takï¿½e wywoï¿½uje
+	 *            metody render() jej skï¿½adowych
 	 * 
 	 * @param g
 	 *            Kontekst graficzny
@@ -191,7 +191,7 @@ public class Game extends JPanel implements KeyListener {
 	}
 
 	/**
-	 * metoda, która reaguje na zwolnienie klawisza true na false i zatrzymuj¹ca
+	 * metoda, ktï¿½ra reaguje na zwolnienie klawisza true na false i zatrzymujï¿½ca
 	 * pacmana
 	 */
 	public void keyReleased(KeyEvent e) {
