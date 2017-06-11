@@ -1,0 +1,10 @@
+Instrukcja do gry PACMAN
+
+Gra polega na poruszaniu siê tytu³owym bohaterem Pacmanem po labiryncie. W labiryncie tym znajduj¹ siê duszki, w zetkniêciu z którymi Pacman traci jedno ze swoich 3 ¿yæ
+Celem gry jest zebranie wszystkich kulek umieszczonych na mapie oraz gwiazdek, dziêki którym Pacman mo¿e zjadaæ duszki. Gdy Pacman uzbiera wszyskie punkty i zachowa conajmniej jedno ¿ycie
+gra przechodzi na kolejn¹ mapê z innym uk³adem œcian.
+
+Sterowanie gry odbywa siê za pomoc¹ strza³em, strza³ka w górê oznacza ruch do góry, stra³ka w dó³ ruch do do³u, strza³ka w lewo to ruch w lewo, a strza³ka w prawo to ruch w prawo.
+
+Przed przyst¹pieniem do gry, nale¿y wybraæ poziom trudnoœci, który zmienia prêdkoœæ przeciwników oraz nale¿y wybraæ nazwê u¿ytkownika, która powinna mieæ wiêcej ni¿ jeden znak oraz nie zawieraæ niedozwolonych znaków.
+Nastêpnie nazwa u¿ytkownika bêdzie wyœwietlana w oknie z gr¹, a w przypadku uzyskania dobrego wyniku zapisana do pliku tekstwoego wraz z wynikiem.
