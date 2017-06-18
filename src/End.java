@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- * 
+ * Klasa panelu odpowiedzialnego za podsumowanie rozgrywki
  * @author Pawel Kowalik
  * @author Adrian Pacholec
  */
@@ -117,7 +117,7 @@ public class End extends JPanel implements ActionListener {
 		System.out.println(records.get(0).name);
 		System.out.println(records.size());
 		System.out.println(records.get(records.size() - 1).name);
-		records.remove(records.size() - 1);
+		if(records.size() >=10) records.remove(records.size() - 1);
 		System.out.println(records.size());
 
 		try {

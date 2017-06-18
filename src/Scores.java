@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 /**
- * Klasa InstructionWindow, która zajmuje się wyświetlaniem najlepszych wyników
+ * Klasa, która zajmuje się wyświetlaniem najlepszych wyników
  * gry offline
  * 
  * @author Pawel Kowalik
@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 public class Scores extends JPanel implements ActionListener {
 
 	/**
-	 * nieobowi�zkowy identyfikator klasy
+	 * nieobowiązkowy identyfikator klasy
 	 */
 	private static final long serialVersionUID = 1L;
 	/**

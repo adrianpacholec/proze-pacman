@@ -4,6 +4,8 @@ import java.util.Comparator;
  * Klasa Komparaotr dziedziczaca po Comparator. Umozliwia porownywanie obiektow
  * klasy Records w celu posortowania ich malejaco wzgledem wartosci pola score.
  * 
+ * @author Pawel Kowalik
+ * @author Adrian Pacholec
  */
 public class Komparator implements Comparator<Record> {
 
