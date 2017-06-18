@@ -33,8 +33,6 @@ public class Main
 		} catch (IOException e) {
 		    System.out.println("Exception when loading properties: " + e);
 		}
-	
-	
-		
+			
 	}
 }

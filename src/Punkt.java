@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -15,7 +14,7 @@ public class Punkt extends Rectangle {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	private int licznik;
 	/**
 	 * Konstruktor obiektu punktu
 	 * 
@@ -25,8 +24,9 @@ public class Punkt extends Rectangle {
 	 *            Pozycja y licz�c od lewego g�renego rogu panelu
 	 * 
 	 */
-	public Punkt(int x, int y) {
+	public Punkt(int x, int y, int rand) {
 		setBounds(x + 10, y + 10, 8, 8);
+		licznik = rand;
 	}
 
 	/**
@@ -37,7 +37,9 @@ public class Punkt extends Rectangle {
 	 * 
 	 */
 	public void render(Graphics g) {
-		g.setColor(Color.green);
-		g.fillRect(x, y, width, height);
+		
+		Spritesheet sheet = Control.moneta;
+		g.drawImage(sheet.getSprite(licznik,1), x-8, y-8, null);
+		if (licznik == 7) licznik = 0; else licznik++;
 	}
 }

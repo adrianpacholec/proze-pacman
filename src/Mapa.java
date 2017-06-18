@@ -3,23 +3,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Klasa reprezentuj¹ca mapê gry
+ * Klasa reprezentujï¿½ca mapï¿½ gry
  *
- * @author Pawe³ Kowalik
+ * @author Paweï¿½ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
 public class Mapa {
 	/**
-	 * Liczba rzêdów bloków
+	 * Liczba rzï¿½dï¿½w blokï¿½w
 	 */
 	public int width;
 
 	/**
-	 * Liczba kolumn bloków
+	 * Liczba kolumn blokï¿½w
 	 */
 	public int height;
 
@@ -29,45 +30,46 @@ public class Mapa {
 	static public int MapSize;
 
 	/**
-	 * Tablica obiektów typu Tile
+	 * Tablica obiektï¿½w typu Tile
 	 */
 	public Tile[][] tiles;
 
 	/**
-	 * Lista obiektów typu Punkt
+	 * Lista obiektï¿½w typu Punkt
 	 */
 	public List<Punkt> punkty;
 
 	/**
-	 * Lista obiektów typu Enemy
+	 * Lista obiektï¿½w typu Enemy
 	 */
 	public List<Enemy> enemies;
 
 	/**
-	 * Lista obiektów typu Star
+	 * Lista obiektï¿½w typu Star
 	 */
 	public List<Star> stars;
 
 	/**
 	 * zmienna potrzebna do przekazania predkosci wrogow
 	 */
-	public int speedlevel;
+	public int enemyspeed;
 
 	/**
-	 * Konstruktor obiektu mapy. Wczytuje informacjê o pozycji danego obiektu na
+	 * Konstruktor obiektu mapy. Wczytuje informacjï¿½ o pozycji danego obiektu na
 	 * planszy z pliku mapa.txt i odpowiednio tworzy obiekty na mapie.
 	 * 
 	 * @param path
-	 *            Œcie¿ka dostêpu do pliku mapa.txt
+	 *            ï¿½cieï¿½ka dostï¿½pu do pliku mapa.txt
 	 * 
 	 */
 
-	public Mapa(String mapaPath, int speedlevel) {
+	public Mapa(String mapaPath, int enemyspeed, int temat) {
 
-		this.speedlevel = speedlevel;
+		this.enemyspeed = enemyspeed;
 		punkty = new ArrayList<>();
 		enemies = new ArrayList<>();
 		stars = new ArrayList<>();
+		Random generator = new Random();
 		try {
 			Scanner in = new Scanner(new File(mapaPath));
 			int licznik = 0;
@@ -93,11 +95,8 @@ public class Mapa {
 
 		for (int h = 0; h < height + 2; h++) {
 			for (int w = 0; w < width + 2; w++) {
-				System.out.print(p[h][w]);
 			}
-			System.out.println();
 		}
-		System.out.println();
 		try {
 			Scanner in = new Scanner(new File(mapaPath));
 			int j = 0;
@@ -114,9 +113,7 @@ public class Mapa {
 
 		for (int h = 0; h < height + 2; h++) {
 			for (int w = 0; w < width + 2; w++) {
-				System.out.print(p[h][w]);
 			}
-			System.out.println();
 		}
 
 		tiles = new Tile[height][width];
@@ -126,18 +123,20 @@ public class Mapa {
 				if (p[yy + 1][xx + 1] == '1') {
 					int[] a = { p[yy][xx], p[yy][xx + 1], p[yy][xx + 2], p[yy + 1][xx], p[yy + 1][xx + 2],
 							p[yy + 2][xx], p[yy + 2][xx + 1], p[yy + 2][xx + 2] };
-					tiles[yy][xx] = new Tile(xx * 32, yy * 32, a);
+					tiles[yy][xx] = new Tile(xx * 32, yy * 32, a, temat);
 				} else if (p[yy + 1][xx + 1] == 'P') {
 					Game.player.x = xx * 32;
 					Game.player.y = yy * 32;
 					Game.player.newx = xx * 32;
 					Game.player.newy = yy * 32;
 				} else if (p[yy + 1][xx + 1] == 'E') {
-					enemies.add(new Enemy(xx * 32, yy * 32, speedlevel));
+					enemies.add(new Enemy(xx * 32, yy * 32, enemyspeed));
 				} else if (p[yy + 1][xx + 1] == 'S') {
-					stars.add(new Star(xx * 32, yy * 32));
+					stars.add(new Star(xx * 32, yy * 32, generator.nextInt(7) + 1));
+				} else if (p[yy + 1][xx + 1] == ' '){
+					
 				} else {
-					punkty.add(new Punkt(xx * 32, yy * 32));
+					punkty.add(new Punkt(xx * 32, yy * 32, generator.nextInt(7) + 1));
 				}
 			}
 		}
@@ -151,7 +150,7 @@ public class Mapa {
 	}
 
 	/**
-	 * Metoda render wywo³uj¹ca metody render poszczególnych obiektów nale¿¹cych
+	 * Metoda render wywoï¿½ujï¿½ca metody render poszczegï¿½lnych obiektï¿½w naleï¿½ï¿½cych
 	 * do mapy gry
 	 * 
 	 * @param g

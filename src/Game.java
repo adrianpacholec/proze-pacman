@@ -1,14 +1,9 @@
-import java.awt.Color;
-
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * Klasa opisuj�ca panel Swing, w kt�rym odbywa si� rysowanie grafiki gry.
@@ -20,7 +15,7 @@ import javax.swing.Timer;
  * @version 1.0
  */
 
-public class Game extends JPanel implements KeyListener {
+public class Game extends Control {
 	/**
 	 * 
 	 */
@@ -33,17 +28,14 @@ public class Game extends JPanel implements KeyListener {
 
 	static int points = 0;
 	static int life = 3;
+	private int start_star;
+	public int temat;
 
-	/**
-	 * Obiekt gracza
-	 */
-	public static Player player;
-	/**
-	 * Obiekt mapy
-	 */
-	public static Mapa mapa;
-	public static Spritesheet spritesheet;
 	public int map_index;
+	/**
+	 * zmienna przechowuj�ca liczb� �y� gracza
+	 */
+	public static boolean win;
 
 	/**
 	 * Obiekt reprezentuj�cy GUI
@@ -53,15 +45,10 @@ public class Game extends JPanel implements KeyListener {
 	/**
 	 * zmienna potrzebna do przekazania predkosci wrogow
 	 */
-	public int speedlevel;
+	public int enemyspeed;
 	/**
 	 * obiekt gry
 	 */
-
-	/**
-	 * ramka kt�ra zawiera gr�
-	 */
-	public JFrame frame;
 
 	public String pointsinString;
 	/**
@@ -77,62 +64,103 @@ public class Game extends JPanel implements KeyListener {
 	 * @param nicktext
 	 *            Nick gracza
 	 */
-
-	class TimeListener implements ActionListener {
-
-		public void actionPerformed(ActionEvent e) {
-			repaint();
-			mapa.update();
-			player.update(nick);
+	class removePoint extends TimerTask {
+		public void run() {
+			if (points > 0)
+				points--;
 		}
 	}
 
-	ActionListener listener = new TimeListener();
-	Timer timer = new Timer(1000 / 60, listener);
-
-	public Game(String nicktext, int speedlevel, JFrame frame, String[] mapaPath, int map, int points) {
+	public Game(String nicktext, int enemyspeed, JFrame frame, String[] mapaPath, int map, int points, int temat) {
 		Game.points = points;
 		Game.mapaPath = mapaPath;
 		this.frame = frame;
-		this.speedlevel = speedlevel;
+		this.enemyspeed = enemyspeed;
 		this.map_index = map;
-		//Dimension dimension = new Dimension(Config.GameWidth, Config.GameHeight);
-		//setPreferredSize(dimension);
-		nick = nicktext;
-		player = new Player(Config.GameWidth / 2, Config.GameHeight / 2, speedlevel, this, frame);
-		mapa = new Mapa(mapaPath[map_index++], speedlevel);
-		spritesheet = new Spritesheet("/sprites/terrain.png");
+		this.temat = temat;
 
+		nick = nicktext;
+		player = new Player(Config.GameWidth / 2, Config.GameHeight / 2, enemyspeed);
+		mapa = new Mapa(mapaPath[map_index++], this.enemyspeed, temat);
+		spritesheet = new Spritesheet("/sprites/male.png");
+		moneta = new Spritesheet("/sprites/coin.png");
 		gui = new GUI();
+		gwiazdka=false;
 		addKeyListener(this);
 		setFocusable(true);
 		timer.start();
-
+		Timer point_timer = new Timer();
+		point_timer.schedule(new removePoint(), 0, 4000);
 	}
 
 	/**
-	 * Metoda ko�cz�ca prac� programu
+	 * Metoda kończąca pracę programu
 	 */
 
 	public synchronized void stop() {
 		timer.stop();
-		frame.dispose();
-		if (Player.win && map_index != mapaPath.length) {
+		if (win && map_index != mapaPath.length) {
 			nextLevel();
-			// Victory victory = new Victory(nick, points);
 		} else {
-			this.setVisible(false);
-			// Defeat defeat = new Defeat(nick, points);
+			End victory = new End(frame, nick, points);
+			frame.add(victory);
+			frame.remove(this);
+			frame.setVisible(true);
 		}
 	}
 
 	public void nextLevel() {
-		this.setVisible(false);
-		Game game2 = new Game(nick, speedlevel, frame, mapaPath, map_index, points);
+		Game game2 = new Game(nick, enemyspeed, frame, mapaPath, map_index, points, temat);
 		frame.add(game2);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
+		frame.remove(this);
 		frame.setVisible(true);
+	}
+
+	@Override
+	void updatePlayer() {
+		for (int i = 0; i < mapa.stars.size(); i++) {
+			if (player.intersects(mapa.stars.get(i))) {
+				mapa.stars.remove(i);
+				start_star = (int) System.currentTimeMillis();
+				points += (2 * enemyspeed);
+				gwiazdka = true;
+				break;
+			}
+		}
+		for (int i = 0; i < mapa.punkty.size(); i++) {
+			if (player.intersects(mapa.punkty.get(i))) {
+				mapa.punkty.remove(i);
+				points += enemyspeed;
+				break;
+			}
+		}
+		if (mapa.punkty.size() == 0 && mapa.stars.size() == 0) {
+			win = true;
+			stop();
+		}
+		for (int i = 0; i < mapa.enemies.size(); i++) {
+			if (player.intersects(mapa.enemies.get(i))) {
+				if (!gwiazdka) {
+
+					life--;
+					player.left = false;
+					player.right = false;
+					player.up = false;
+					player.down = false;
+					points -= (5 * enemyspeed);
+					player.moveTo(player.newx, player.newy);
+
+					if (life == 0) {
+						win = false;
+						stop();
+					}
+				} else
+					mapa.enemies.remove(i);
+				points += (5 * enemyspeed);
+			}
+		}
+		if ((int) System.currentTimeMillis() - start_star >= 5000)
+			gwiazdka = false;
 	}
 
 	/**
@@ -157,11 +185,19 @@ public class Game extends JPanel implements KeyListener {
 		Graphics dbg = bufor1.getGraphics();
 
 		super.paintComponent(dbg);
-		dbg.setColor(Color.black);
+		if (temat == 0)
+			dbg.setColor(KolorTrawy);
+		else if (temat == 1)
+			dbg.setColor(KolorLak);
+		else if (temat == 2)
+			dbg.setColor(KolorZboz);
+
 		dbg.fillRect(0, 0, Config.GameWidth, Config.GameHeight);
 		mapa.render(dbg);
 		player.render(dbg);
 		gui.render(dbg, nick, points);
+		if (paused)
+			gui.pause(dbg);
 		dbg.dispose();
 		setFocusable(true);
 
@@ -169,39 +205,6 @@ public class Game extends JPanel implements KeyListener {
 		Graphics gg = bufor2.getGraphics();
 		gg.drawImage(bufor1, 0, 0, getWidth(), getHeight(), null);
 		g.drawImage(bufor2, 0, 0, this);
-
-	}
-
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-			player.right = true;
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
-			player.left = true;
-		if (e.getKeyCode() == KeyEvent.VK_UP)
-			player.up = true;
-		if (e.getKeyCode() == KeyEvent.VK_DOWN)
-			player.down = true;
-
-	}
-
-	/**
-	 * metoda, kt�ra reaguje na zwolnienie klawisza true na false i zatrzymuj�ca
-	 * pacmana
-	 */
-	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-			player.right = false;
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
-			player.left = false;
-		if (e.getKeyCode() == KeyEvent.VK_UP)
-			player.up = false;
-		if (e.getKeyCode() == KeyEvent.VK_DOWN)
-			player.down = false;
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 

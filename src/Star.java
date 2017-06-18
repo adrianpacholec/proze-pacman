@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -25,7 +24,7 @@ public class Star extends Rectangle {
 	 *            Pozycja y licz�c od lewego g�renego rogu panelu
 	 * 
 	 */
-	public Star(int x, int y) {
+	public Star(int x, int y, int rand) {
 		setBounds(x + 6, y + 6, 20, 20);
 	}
 
@@ -37,8 +36,7 @@ public class Star extends Rectangle {
 	 * 
 	 */
 	public void render(Graphics g) {
-		g.setColor(Color.white);
-		g.fillRect(x, y, width, height);
+		Spritesheet sheet = Control.spritesheet;
+		g.drawImage(sheet.getSprite(9, 3), x - 4, y - 4, null);
 	}
-	
 }

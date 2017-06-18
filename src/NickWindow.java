@@ -2,8 +2,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -11,12 +9,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import java.awt.Dimension;
 
-public class NickWindow extends JFrame implements ActionListener {
+public class NickWindow extends JPanel implements ActionListener {
 
 	/**
 	 * nieobowi�zowy identyfikator klasy
@@ -24,35 +22,33 @@ public class NickWindow extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * labele informuj�ce u�ytkownika co ma zrobi�, wybra� poziom i wpsia� nick
-	 */
-	private JLabel nick, picklevel;
-
-	/**
 	 * przyciski do poruszania si� po menu
 	 */
-	private JButton back, ok;
+	protected JButton back;
+
+	protected JButton ok;
 
 	/**
 	 * pole tekstowe do wpisania nicku
 	 */
-	private JTextField field;
+	protected JTextField field;
+
+	public JFrame frame;
 
 	/**
 	 * grupa radiobutton�w
 	 */
-	private ButtonGroup levels;
+	protected ButtonGroup levels;
 
 	/**
 	 * radiobuttony kt�re pozwalaj� wybra� poziom trudno�ci przez u�ytownika
 	 */
-	private JRadioButton easy, medium, hard;
+	protected JRadioButton easy;
 
-	/**
-	 * zmienna do okre�lenia w��snej czcionki
-	 */
-	private Font Userfont;
+	protected JRadioButton medium;
 
+	protected JRadioButton hard;
+	protected int temat;
 	/**
 	 * zmienna zapisuj�ca tekst kt�ry u�ytkownik wpisa� do pola tekstowego
 	 */
@@ -68,37 +64,13 @@ public class NickWindow extends JFrame implements ActionListener {
 	 */
 	public int points;
 
-	public NickWindow() {
-		super(Config.UserName);
+	public NickWindow(JFrame frame) {
 		setLayout(new GridLayout(8, 1));
-		setSize(500, 300);
+		this.frame = frame;
+		add(new JLabel(Config.ButtonUserName, SwingConstants.CENTER));
 
-		/**
-		 * metoda pytaj�ca u�ytkownika czy jest pewny, �e chce sko�czy�
-		 * wpisywanie nicku i zgodnie z jego wol�, albo zamyka to okno i wraca
-		 * do poprzedniego, albo je�li u�ytkownik zmieni� zdanie pozostaje w tej
-		 * cze�ci menu
-		 * 
-		 */
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				int x = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz wr�ci�?", "",
-						JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				if (x == JOptionPane.YES_OPTION) {
-					e.getWindow().dispose();
-					new MainWindow();
-				}
-			}
-		});
-
-		nick = new JLabel(Config.ButtonUserName, SwingConstants.CENTER);
-		add(nick);
-
-		Userfont = new Font("Courier", Font.BOLD, 15);
 		field = new JTextField();
-		field.setBounds(170, 80, 50, 20);
-		field.setFont(Userfont);
+		field.setFont(new Font("Courier", Font.BOLD, 15));
 		add(field);
 
 		back = new JButton(Config.ButtonBack);
@@ -109,9 +81,7 @@ public class NickWindow extends JFrame implements ActionListener {
 		add(ok);
 		ok.addActionListener(this);
 
-		picklevel = new JLabel("Wybierz poziom: ", SwingConstants.CENTER);
-		add(picklevel);
-
+		add(new JLabel("Wybierz poziom: ", SwingConstants.CENTER));
 		levels = new ButtonGroup();
 
 		easy = new JRadioButton(Config.GameLevel_1, false);
@@ -142,14 +112,18 @@ public class NickWindow extends JFrame implements ActionListener {
 
 		if (source == easy) {
 			spdlevel = Config.EnemySpeed_Level_1;
+			temat = 0;
 		} else if (source == medium) {
 			spdlevel = Config.EnemySpeed_Level_2;
+			temat = 1;
 		} else if (source == hard) {
 			spdlevel = Config.EnemySpeed_Level_3;
+			temat = 2;
 		} else if (source == back) {
-
-			new MainWindow().setVisible(true);
-			dispose();
+			Menu menu = new Menu(frame);
+			frame.add(menu);
+			frame.remove(this);
+			frame.setVisible(true);
 
 		}
 
@@ -163,7 +137,7 @@ public class NickWindow extends JFrame implements ActionListener {
 			 * seria sprawdza� maj�ca na celu wpisanie poprawnego nicku
 			 */
 			if (nicktext.trim().equals("")) {
-				JOptionPane.showMessageDialog(null, " Musisz wprowadzi� nazw� u�ytkownika ", "Ostrze�enie",
+				JOptionPane.showMessageDialog(null, " Musisz wprowadzić nazwę użytkownika ", "Ostrzeżenie",
 						JOptionPane.WARNING_MESSAGE);
 				field.setText("");
 				/**
@@ -171,47 +145,42 @@ public class NickWindow extends JFrame implements ActionListener {
 				 */
 				field.requestFocus();
 
-			} else {
+			} else if (levels.isSelected(null)) {
+				JOptionPane.showMessageDialog(null, " Musisz wybrać poziom trudności ", "Ostrzeżenie",
+						JOptionPane.WARNING_MESSAGE);
+			}
+
+			else {
 				if (nicktext.length() > 1 && !nicktext.contains(" ") && !nicktext.contains(",")
 						&& !nicktext.contains(".") && !nicktext.contains("!") && !nicktext.contains("@")
 						&& !nicktext.contains("#") && !nicktext.contains("$") && !nicktext.contains("*")
 						&& !nicktext.contains("/") && !nicktext.contains("+") && !nicktext.contains("-")
 						&& !nicktext.contains("]")) {
-					// make sure that its length is not over 1, and that it has
-					// no spaces and no commas
 
-					JOptionPane.showMessageDialog(null, " Tw�j nick: " + nicktext, "Ahoj przygodo!",
+					JOptionPane.showMessageDialog(null, " Twój nick: " + nicktext, "Ahoj przygodo!",
 							JOptionPane.INFORMATION_MESSAGE);
 
 					/**
-					 * tworzenie okna z gr�
+					 * tworzenie okna z grą
 					 */
 
-					JFrame frame = new JFrame();
 					String[] mapy = Config.FileMap.split(" ");
-					// int map_index = mapy.length;
 					int map_index = 0;
-					Game game = new Game(nicktext, spdlevel, frame, mapy, map_index, points);
-					frame.setTitle(Config.ApplicationName);
+					System.out.print("Szybkosc przeciwnikow: " + spdlevel);
+
+					Game game = new Game(nicktext, spdlevel, frame, mapy, map_index, 0, temat);
+					Game.life = 3;
 					frame.add(game);
-					Dimension dimension = new Dimension(Config.GameWidth, Config.GameHeight);
-					frame.setPreferredSize(dimension);
-					frame.pack();
-					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.setLocationRelativeTo(null);
+					frame.remove(this);
 					frame.setVisible(true);
-					// game.run();
-					dispose();
 
 				} else {
-					// if a space or comma was found no matter how big the text
-					// it will execute the else..
-					JOptionPane.showMessageDialog(null, "Wprowad� nazw� u�ytkownika jeszcze raz", "Ostrze�enie",
+
+					JOptionPane.showMessageDialog(null, "Wprowadź nazwę użytkownika jeszcze raz", "Ostrzeżenie",
 							JOptionPane.WARNING_MESSAGE);
-					// field.setText("");
 
 					/**
-					 * ustawienie myszki na pole tekstowe
+					 * ustawienie kurosra na pole tekstowe
 					 */
 					field.requestFocus();
 					/**

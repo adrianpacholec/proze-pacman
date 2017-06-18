@@ -14,9 +14,10 @@ public class Spritesheet {
 			System.out.println("Nie zaladowano sprite");
 		}
 	}
-	public BufferedImage getSprite(int xx, int yy){
-		return sheet.getSubimage(xx*32, yy*32,32,32);
-		
+
+	public BufferedImage getSprite(int xx, int yy) {
+		return sheet.getSubimage(xx * 32, yy * 32, 32, 32);
+
 	}
-	
+
 }

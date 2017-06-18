@@ -1,6 +1,5 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import javax.swing.JFrame;
 
 /**
  * Klasa reprezentuj�ca gracza, dziedziczy po klasie Rectangle
@@ -15,23 +14,13 @@ public class Player extends Rectangle {
 	 * pocz�tku wynosi 0
 	 */
 
-	/**
-	 * zmienna przechowuj�ca liczb� �y� gracza
-	 */
-	public static boolean win;
-
-	/**
-	 * obiekt gry
-	 */
-	public JFrame frame;
-
 	public int newx;
 	public int newy;
-	private int start_star;
+	public int anim = 0;
 	/**
 	 * 
 	 */
-	public Game game;
+	public Control game;
 
 	/**
 	 * zmienna potrzebna do przekazania predkosci wrogow
@@ -57,10 +46,8 @@ public class Player extends Rectangle {
 	 *            Pozycja y licz�c od lewego g�renego rogu panelu
 	 * 
 	 */
-	public Player(int x, int y, int speedlevel, Game game, JFrame frame) {
-		this.game = game;
+	public Player(int x, int y, int speedlevel) {
 
-		this.frame = frame;
 		this.speedlevel = speedlevel;
 		setBounds(x, y, 32, 32);
 	}
@@ -73,77 +60,69 @@ public class Player extends Rectangle {
 	 * 
 	 */
 	public void render(Graphics g) {
-		/*
-		 * if (!Game.gwiazdka) g.setColor(Color.yellow); else
-		 * g.setColor(Color.green);
-		 */
-		g.fillRect(x, y, 32, 32);
+		Spritesheet sheet = Control.spritesheet;
+
+		if (!Game.gwiazdka) {
+			if (right)
+				g.drawImage(sheet.getSprite(7 + anim, 7), x, y, null);
+			else if (up)
+				g.drawImage(sheet.getSprite(7 + anim, 8), x, y, null);
+			else if (left)
+				g.drawImage(sheet.getSprite(7 + anim, 6), x, y, null);
+			else if (down)
+				g.drawImage(sheet.getSprite(7 + anim, 5), x, y, null);
+			else
+				g.drawImage(sheet.getSprite(8, 5), x, y, null);
+
+		} else {
+			if (left)
+				g.drawImage(sheet.getSprite(4 + anim, 8), x, y, null);
+			else if (right)
+				g.drawImage(sheet.getSprite(4 + anim, 6), x, y, null);
+			else if (up)
+				g.drawImage(sheet.getSprite(4 + anim, 7), x, y, null);
+			else if (down)
+				g.drawImage(sheet.getSprite(4 + anim, 5), x, y, null);
+			else
+				g.drawImage(sheet.getSprite(4, 5), x, y, null);
+
+		}
 
 	}
 
 	/**
 	 * metoda na gloda
 	 */
-	public void update(String nick) {
-		if (right && canMove(x + Config.PacmanSpeed, y))
+	public void move() {
+		if (right && canMove(x + Config.PacmanSpeed, y)) {
 			x += Config.PacmanSpeed;
-		if (left && canMove(x - Config.PacmanSpeed, y))
+			if (anim == 2)
+				anim = 0;
+			else
+				anim++;
+		}
+		if (left && canMove(x - Config.PacmanSpeed, y)) {
 			x -= Config.PacmanSpeed;
-		if (up && canMove(x, y - Config.PacmanSpeed))
+			if (anim == 2)
+				anim = 0;
+			else
+				anim++;
+		}
+		if (up && canMove(x, y - Config.PacmanSpeed)) {
 			y -= Config.PacmanSpeed;
-		if (down && canMove(x, y + Config.PacmanSpeed))
+			if (anim == 2)
+				anim = 0;
+			else
+				anim++;
+		}
+
+		if (down && canMove(x, y + Config.PacmanSpeed)) {
 			y += Config.PacmanSpeed;
-
-		for (int i = 0; i < Game.mapa.stars.size(); i++) {
-			if (this.intersects(Game.mapa.stars.get(i))) {
-				Game.mapa.stars.remove(i);
-				start_star = (int) System.currentTimeMillis();
-				Game.gwiazdka = true;
-				break;
-
-			}
-
+			if (anim == 2)
+				anim = 0;
+			else
+				anim++;
 		}
-
-		for (int i = 0; i < Game.mapa.punkty.size(); i++) {
-			if (this.intersects(Game.mapa.punkty.get(i))) {
-				Game.mapa.punkty.remove(i);
-				Game.points += 1;
-				break;
-			}
-		}
-		if (Game.mapa.punkty.size() == 0 && Game.mapa.stars.size() == 0) {
-			win = true;
-			game.stop();
-		}
-
-		for (int i = 0; i < Game.mapa.enemies.size(); i++) {
-			if (this.intersects(Game.mapa.enemies.get(i))) {
-				if (!Game.gwiazdka) {
-					// lifes = new ArrayList<Int>;
-					Game.life--;
-					Game.player.left = false;
-					Game.player.right = false;
-					Game.player.up = false;
-					Game.player.down = false;
-					Game.player.moveTo(Game.player.newx, Game.player.newy);
-
-					if (Game.life == 0) {
-						win = false;
-						game.stop();
-
-					}
-				} else
-					Game.mapa.enemies.remove(i);
-
-			}
-
-		}
-
-		// odliczaj
-
-		if ((int) System.currentTimeMillis() - start_star >= 5000)
-			Game.gwiazdka = false;
 
 	}
 
@@ -158,11 +137,11 @@ public class Player extends Rectangle {
 
 	public boolean canMove(int nextx, int nexty) {
 		Rectangle bounds = new Rectangle(nextx, nexty, 30, 30);
-		Mapa mapa = Game.mapa;
-		for (int xxx = 0; xxx < Game.mapa.tiles.length; xxx++)
-			for (int yyy = 0; yyy < Game.mapa.tiles[0].length; yyy++) {
+		Mapa mapa = Control.mapa;
+		for (int xxx = 0; xxx < Control.mapa.tiles.length; xxx++)
+			for (int yyy = 0; yyy < Control.mapa.tiles[0].length; yyy++) {
 				if (mapa.tiles[xxx][yyy] != null) {
-					if (bounds.intersects(Game.mapa.tiles[xxx][yyy])) {
+					if (bounds.intersects(Control.mapa.tiles[xxx][yyy])) {
 						return false;
 
 					}
