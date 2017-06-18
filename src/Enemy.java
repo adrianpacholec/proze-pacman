@@ -10,13 +10,18 @@ import java.util.Random;
  * @version 1.0
  */
 public class Enemy extends Rectangle {
-
+	/**
+	 * Identyfikator wersji klasy
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * Stany, w jakich może znajdować się przeciwnik
 	 */
 	private int random = 0, smart = 1, find_path = 2;
+	/**
+	 * Zmienna służąca do obsługi animacji graficznej przeciwnika
+	 */
 	private int anim2 = 0;
 	/**
 	 * zmienna pomocnicza
@@ -279,8 +284,6 @@ public class Enemy extends Rectangle {
 			}
 			time++;
 			
-			//if (!move) state = random;
-
 			if (time >= 2*TargetTime) {
 				state = random;
 				time = 0;

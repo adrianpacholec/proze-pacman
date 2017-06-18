@@ -7,9 +7,7 @@ import javax.swing.WindowConstants;
 
 /**
  * 
- * Klasa opisuj�ca i tworz�ca menu główne gry, w którym są przyciski do
- * rozpocz�cia nowej gry, wyswietlenia instrukcji i najlepszych wyników oraz
- * mo�liwo�ci zako�czenia gry
+ * Klasa opisująca okno menu programu. 
  * 
  * @author Pawel Kowalik
  * @author Adrian Pacholec
@@ -23,7 +21,6 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 
 		super(Config.ApplicationName);
-
 		Dimension dimension = new Dimension(Config.GameWidth, Config.GameHeight);
 		setPreferredSize(dimension);
 		Menu menu = new Menu(this);

@@ -4,36 +4,39 @@ import java.awt.Rectangle;
 /**
  * Klasa reprezentuj�ca gracza, dziedziczy po klasie Rectangle
  *
- * @author Pawe� Kowalik
+ * @author Paweł Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
 public class Player extends Rectangle {
-	/**
-	 * punkty gromadzone przez gracza po zebraniu punkt�w, ich liczba na
-	 * pocz�tku wynosi 0
-	 */
 
-	public int newx;
-	public int newy;
-	public int anim = 0;
 	/**
-	 * 
+	 * Identyfikator wersji klasy
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Obiekt gry
 	 */
 	public Control game;
 
 	/**
 	 * zmienna potrzebna do przekazania predkosci wrogow
 	 */
-
 	public int speedlevel;
-
-	public String nick;
-
-	private static final long serialVersionUID = 1L;
-
 	/**
-	 * zmienne s�u��ce do obs�ugi ruchu pacmana
+	 * Nick gracza
+	 */
+	public String nick;
+	/**
+	 * Zmienne z położeniem, jakie nalezy nadać graczowi po utracie życia
+	 */
+	public int newx, newy;
+	/**
+	 * Zmienna pomocnicza do obsługi animacji
+	 */
+	public int anim = 0;
+	/**
+	 * zmienne służące do obs�ugi ruchu pacmana
 	 */
 	public boolean right, left, down, up;
 
@@ -44,6 +47,8 @@ public class Player extends Rectangle {
 	 *            Pozycja x licz�c od lewego g�renego rogu panelu
 	 * @param y
 	 *            Pozycja y licz�c od lewego g�renego rogu panelu
+	  * @param speedlevel
+	 *           Prędkość przeciwników
 	 * 
 	 */
 	public Player(int x, int y, int speedlevel) {
@@ -91,7 +96,7 @@ public class Player extends Rectangle {
 	}
 
 	/**
-	 * metoda na gloda
+	 * metoda odpowiedzialna za poruszanie gracza
 	 */
 	public void move() {
 		if (right && canMove(x + Config.PacmanSpeed, y)) {
@@ -151,7 +156,9 @@ public class Player extends Rectangle {
 		return true;
 
 	}
-
+	/**
+	 * metoda przenosząca gracza pod wskazane koordynaty
+	 */
 	public void moveTo(int x, int y) {
 		this.x = x;
 		this.y = y;

@@ -24,15 +24,15 @@ public class NickWindow extends JPanel implements ActionListener {
 	/**
 	 * przyciski do poruszania si� po menu
 	 */
-	protected JButton back;
-
-	protected JButton ok;
+	protected JButton back, ok;
 
 	/**
 	 * pole tekstowe do wpisania nicku
 	 */
 	protected JTextField field;
-
+	/**
+	 * obiekt okna programu
+	 */
 	public JFrame frame;
 
 	/**
@@ -43,11 +43,10 @@ public class NickWindow extends JPanel implements ActionListener {
 	/**
 	 * radiobuttony kt�re pozwalaj� wybra� poziom trudno�ci przez u�ytownika
 	 */
-	protected JRadioButton easy;
-
-	protected JRadioButton medium;
-
-	protected JRadioButton hard;
+	protected JRadioButton easy, medium, hard;
+	/**
+	 * zmienna przechowująca temat graficzny
+	 */
 	protected int temat;
 	/**
 	 * zmienna zapisuj�ca tekst kt�ry u�ytkownik wpisa� do pola tekstowego
@@ -64,6 +63,12 @@ public class NickWindow extends JPanel implements ActionListener {
 	 */
 	public int points;
 
+	/**
+	 * Konstruktor panelu wyboru nicku i poziomu truności
+	 * 
+	 * @param frame
+	 *            Obiekt okna programu
+	 */
 	public NickWindow(JFrame frame) {
 		setLayout(new GridLayout(8, 1));
 		this.frame = frame;
@@ -101,11 +106,12 @@ public class NickWindow extends JPanel implements ActionListener {
 		add(hard);
 		hard.setHorizontalAlignment(AbstractButton.CENTER);
 		hard.addActionListener(this);
-
 		field.requestFocus();
-
 	}
 
+	/**
+	 * Metoda sterująca zachowaniem programu po wyborze przycisku
+	 */
 	public void actionPerformed(ActionEvent e) {
 
 		Object source = e.getSource();

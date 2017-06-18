@@ -6,9 +6,9 @@ import java.util.Properties;
 /**
  * Implementacja wczytywania pliku konfiguracyjngeo.
  * <p>
- * Zawiera metodê przyjmuj¹c¹ nazwê pliku konfiguracyjnego i zwracaj¹c¹
- * obiekt typu Properties zawieraj¹cy sta³e konfiguracyjne.
- ** @author Pawe³ Kowalik
+ * Zawiera metodÄ™ przyjmujï¿½cï¿½ nazwï¿½ pliku konfiguracyjnego i zwracajï¿½cï¿½
+ * obiekt typu Properties zawierajï¿½cy staï¿½e konfiguracyjne.
+ ** @author Paweï¿½ Kowalik
  *  @author Adrian Pacholec
  *  @version 1.0
  *
@@ -16,12 +16,12 @@ import java.util.Properties;
 public class ReadConfig {
 
     /**
-     * Metoda s³u¿¹ca do wyczytania wartoœci z pliku <code>.properties</code>
+     * Metoda sÅ‚uÅ¼Ä…ca do wyczytania wartoï¿½ci z pliku <code>.properties</code>
      * i umieszczenia ich w obiekcie klasy Properties. Metoda zwraca nowo stworzony
      * obiekt.
      *
-     * @param propFilePath œcie¿ka dostepu do pliku <code>.properties</code>
-     * @return obiekt Properties zawieraj¹cy dane z pliku
+     * @param propFilePath Å›cieÅ¼ka dostepu do pliku <code>.properties</code>
+     * @return obiekt Properties zawierajï¿½cy dane z pliku
      * @throws IOException jeÅ¼eli nie uda siÄ™ otworzyÄ‡ pliku konfiguracyjnego
      */
     public final Properties getProperties(String propFilePath) throws IOException {

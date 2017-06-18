@@ -5,30 +5,24 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 /**
- * Klasa opisuj�ca panel Swing, w kt�rym odbywa si� rysowanie grafiki gry.
- * Zmiana? Obs�uguje jednocze�nie cz�� logiki gry zwi�zan� z po��czeniem innych
- * cz�ci w jedno.
+ * Panel menu głównego gry, dziedziczący mechanikę gry z klasy Control.
  *
- * @author Pawe� Kowalik
+ * @author Paweł Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
 
 public class Menu extends Control {
 	/**
-	 * 
+	 * Identyfikator wersji klasy
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public int map_index;
-	public static String[] mapaPath;
-
 	/**
-	 * Konstruktor przyjmuje String oznaczaj�cy nick gracza, ustawia wst�pne
-	 * wymiary planszy gry i tworzy obiekt gracza i mapy
+	 * Konstruktor przyjmuje okno JFrame, do którego zostaje dodany.
 	 * 
-	 * @param nicktext
-	 *            Nick gracza
+	 * @param frame
+	 *            Okno programu
 	 */
 
 	public Menu(JFrame frame) {
@@ -43,7 +37,8 @@ public class Menu extends Control {
 	}
 
 	/**
-	 * Metoda ko�cz�ca prac� programu
+	 * Metoda odczytująca wybór opcji menu, dokonywany poprzez wejście gracza w
+	 * odpowiedni obszar planszy menu.
 	 */
 
 	void updatePlayer() {
@@ -62,6 +57,9 @@ public class Menu extends Control {
 		}
 	};
 
+	/**
+	 * Metoda dodająca do okna programu panel z najlepszymi wynikami.
+	 */
 	public void highScores() {
 		timer.stop();
 		Scores highscores = new Scores(frame);
@@ -71,6 +69,9 @@ public class Menu extends Control {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Metoda dodająca do okna programu panel gry online.
+	 */
 	public void onlineGame() {
 		timer.stop();
 		OnlineGame online = new OnlineGame(frame);
@@ -80,6 +81,9 @@ public class Menu extends Control {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Metoda dodająca do okna programu panel przygotowania gry offline.
+	 */
 	public void nickWindow() {
 		timer.stop();
 		NickWindow nickwindow = new NickWindow(frame);
@@ -89,6 +93,9 @@ public class Menu extends Control {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Metoda rysująca na ekranie podpisy opcji menu.
+	 */
 	private void podpisy(Graphics g) {
 		Spritesheet sheet = Control.spritesheet;
 		g.setColor(new Color(80, 32, 40));
@@ -108,17 +115,10 @@ public class Menu extends Control {
 	}
 
 	/**
-	 * Metoda paint, rysuj�ca grafik�. Tworzy BufferedImage o wymiarach
-	 * pocz�tkowych, na podstawie kt�rego tworzony jest kontekst graficzny,
+	 * Metoda paint, rysująca grafikę. Tworzy BufferedImage o wymiarach
+	 * początkowych, na podstawie którego tworzony jest kontekst graficzny,
 	 * przekazywany do drugiego bufora, o rozmiarach takich, jak JPanel. W ten
-	 * spos�b generowana grafika rozci�gana jest do aktualnych rozmiar�w okna.
-	 * 
-	 * @param g
-	 *            Kontekst graficzny
-	 * 
-	 *            /** Metoda paintComponenet, wywo�ywana jest z metody paint -
-	 *            przy ka�dym jej wywo�aniu rysuje t�o planszy, a tak�e wywo�uje
-	 *            metody render() jej sk�adowych
+	 * sposób generowana grafika rozciągana jest do aktualnych rozmiarów okna.
 	 * 
 	 * @param g
 	 *            Kontekst graficzny

@@ -7,15 +7,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Klasa reprezentuj�ca map� gry
+ * Klasa reprezentuj�ca mapę gry
  *
- * @author Pawe� Kowalik
+ * @author Paweł Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
 public class Mapa {
 	/**
-	 * Liczba rz�d�w blok�w
+	 * Liczba rzędów blok�w
 	 */
 	public int width;
 
@@ -55,12 +55,15 @@ public class Mapa {
 	public int enemyspeed;
 
 	/**
-	 * Konstruktor obiektu mapy. Wczytuje informacj� o pozycji danego obiektu na
+	 * Konstruktor obiektu mapy. Wczytuje informacje o pozycji danego obiektu na
 	 * planszy z pliku mapa.txt i odpowiednio tworzy obiekty na mapie.
 	 * 
-	 * @param path
-	 *            �cie�ka dost�pu do pliku mapa.txt
-	 * 
+	 * @param mapaPath
+	 *            ścieżka dostępu do pliku z mapą
+	 * @param enemyspeed
+	 *            Prędkość przeciwników
+	 * @param temat
+	 *            Wybrany temat graficzny
 	 */
 
 	public Mapa(String mapaPath, int enemyspeed, int temat) {
@@ -133,8 +136,8 @@ public class Mapa {
 					enemies.add(new Enemy(xx * 32, yy * 32, enemyspeed));
 				} else if (p[yy + 1][xx + 1] == 'S') {
 					stars.add(new Star(xx * 32, yy * 32, generator.nextInt(7) + 1));
-				} else if (p[yy + 1][xx + 1] == ' '){
-					
+				} else if (p[yy + 1][xx + 1] == ' ') {
+
 				} else {
 					punkty.add(new Punkt(xx * 32, yy * 32, generator.nextInt(7) + 1));
 				}
@@ -143,6 +146,10 @@ public class Mapa {
 
 	}
 
+	/**
+	 * Metoda sterująca zachowaniem przeciwników na mapie
+	 * 
+	 */
 	public void update() {
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).tick();

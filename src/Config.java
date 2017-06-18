@@ -1,10 +1,10 @@
 import java.util.Properties;
 
 /**
- * Klasa zawieraj¹ca sta³e operacyjne, dostêpne dla wszystkich komponentów
- * programu. Nazwy danych s¹ identyczne z nazwami parametrów konfiguracyjnych.
+ * Klasa zawierajï¿½ca staï¿½e operacyjne, dostï¿½pne dla wszystkich komponentï¿½w
+ * programu. Nazwy danych sï¿½ identyczne z nazwami parametrï¿½w konfiguracyjnych.
  *
- * @author Pawe³ Kowalik
+ * @author PaweÅ‚ Kowalik
  * @author Adrian Pacholec
  * @version 1.0
  */
@@ -17,12 +17,12 @@ public class Config {
 	public static String ApplicationName;
 
 	/**
-	 * szerokoœæ okna
+	 * szerokoï¿½ï¿½ okna
 	 */
 	public static int WindowWidth;
 
 	/**
-	 * wysokoœæ okna
+	 * wysokoï¿½ï¿½ okna
 	 */
 	public static int WindowHeight;
 
@@ -37,104 +37,103 @@ public class Config {
 	public static String ButtonBack;
 
 	/**
-	 * tekst pod przyciskiem s³u¿¹cym przejœciu do menu nowej gry
+	 * tekst pod przyciskiem sï¿½uï¿½ï¿½cym przejï¿½ciu do menu nowej gry
 	 */
 	public static String ButtonNewGame;
 
 	/**
-	 * tekst pod przyciskiem pod s³u¿¹cym do wyœwietlenia instrukcji
+	 * tekst pod przyciskiem pod sï¿½uï¿½ï¿½cym do wyï¿½wietlenia instrukcji
 	 */
 	public static String ButtonInstruction;
 
 	/**
-	 * tekst pod przyciskiem s³u¿¹cym do wyœwietlania wyników
+	 * tekst pod przyciskiem sï¿½uï¿½ï¿½cym do wyï¿½wietlania wynikï¿½w
 	 */
 	public static String ButtonHighscores;
 
 	/**
-	 * tekst pod przyciskiem s³u¿¹cym do wyjœcia z gry
+	 * tekst pod przyciskiem sï¿½uï¿½ï¿½cym do wyjï¿½cia z gry
 	 */
 	public static String ButtonEndGame;
 
 	/**
-	 * tekst pod przyciekiem s³u¿¹cym do wybrania opcji OK
+	 * tekst pod przyciekiem sï¿½uï¿½ï¿½cym do wybrania opcji OK
 	 */
 	public static String ButtonOK;
 
 	/**
-	 * tekst pod przyciskiem s³u¿¹cym do wprowadzenia nazwy u¿ytkownika
+	 * tekst pod przyciskiem sï¿½uï¿½ï¿½cym do wprowadzenia nazwy uï¿½ytkownika
 	 */
 	public static String ButtonUserName;
 
 	/**
-	 * tekst pod przyciskiem s³u¿¹cym do ustawienia poziomu trudnoœci na ³atwy
+	 * tekst pod przyciskiem sï¿½uï¿½ï¿½cym do ustawienia poziomu trudnoï¿½ci na ï¿½atwy
 	 */
 	public static String GameLevel_1;
 
 	/**
-	 * tekst pod przyciskiem s³u¿¹cym do ustawienia poziomu trudnoœci na œredni
+	 * tekst pod przyciskiem sï¿½uï¿½ï¿½cym do ustawienia poziomu trudnoï¿½ci na ï¿½redni
 	 */
 	public static String GameLevel_2;
 
 	/**
-	 * tekst pod przyciskiem s³u¿¹cym do ustawienia poziomu trudnoœci na trudny
+	 * tekst pod przyciskiem sï¿½uï¿½ï¿½cym do ustawienia poziomu trudnoï¿½ci na trudny
 	 */
 	public static String GameLevel_3;
+	/**
+	 * tekst pod przyciskiem sï¿½uï¿½ï¿½cym do przejÅ›cia do panelu z najlepszymi wynikami
+	 */
 	public static String FileHighscore;
 
 	/**
-	 * prêdkoœæ duszków na poziomie ³atwym
+	 * prï¿½dkoï¿½ï¿½ duszkï¿½w na poziomie ï¿½atwym
 	 */
 	public static int EnemySpeed_Level_1;
 
 	/**
-	 * prêdkoœæ duszków na poziomie œrednim
+	 * prï¿½dkoï¿½ï¿½ duszkï¿½w na poziomie ï¿½rednim
 	 */
 	public static int EnemySpeed_Level_2;
 
 	/**
-	 * prêdkoœæ duszków na poziomie trudnym
+	 * prï¿½dkoï¿½ï¿½ duszkï¿½w na poziomie trudnym
 	 */
 	public static int EnemySpeed_Level_3;
 
 	/**
-	 * nazwa pliku z instrukcj¹
+	 * nazwa pliku z instrukcjï¿½
 	 */
 	public static String FileInstruction;
 
 	/**
-	 * szerokoœæ okna z gr¹
+	 * szerokoï¿½ï¿½ okna z grï¿½
 	 */
 	public static int GameWidth;
 
 	/**
-	 * szerokoœæ okna z gr¹
+	 * szerokoï¿½ï¿½ okna z grï¿½
 	 */
 	public static int GameHeight;
 
 	/**
-	 * nazwa pliku z map¹
+	 * nazwa pliku z mapï¿½
 	 */
 	public static String FileMap;
 
 	/**
-	 * nazwa pliku z kolejn¹ map¹
+	 * nazwa pliku z kolejnï¿½ mapï¿½
 	 */
 	public static String FileMap2;
 
 	/**
-	 * 
+	 * szerokoÅ›Ä‡ mapy
 	 */
 	public static int MapWidth;
 
 	/**
-	 * 
+	 * wysokoÅ›Ä‡ mapy
 	 */
 	public static int MapHeight;
-
-	/**
-	 * Tytu³ okna NickWindow
-	 */
 
 	/**
 	 * okreslenie predkosci pacmana
@@ -144,18 +143,17 @@ public class Config {
 	 * tekst nazwa uzytkonika gdzie mamy wpisac swoj nick
 	 */
 	public static String UserName;
-
 	/**
-	 * tytu³ okna koniec gry
+	 * tytuï¿½ okna koniec gry
 	 */
 	public static String GameOver;
 
 	/**
-	 * Metoda parsuj¹ca dane konfiguracyjne, w trybie offline, dane sÄ…
+	 * Metoda parsujï¿½ca dane konfiguracyjne, w trybie offline, dane sÄ…
 	 * wczytywane z lokalnego pliku konfiguracyjnego
 	 * 
 	 * @param Config
-	 *            obiekt Properties, który przechowuje dane do sparsowania
+	 *            obiekt Properties, ktï¿½ry przechowuje dane do sparsowania
 	 */
 
 	public static void readConstants(Properties Config) {

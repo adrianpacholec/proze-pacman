@@ -6,9 +6,8 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 
 /**
- * Klasa opisuj�ca panel Swing, w kt�rym odbywa si� rysowanie grafiki gry.
- * Zmiana? Obs�uguje jednocze�nie cz�� logiki gry zwi�zan� z po��czeniem innych
- * cz�ci w jedno.
+ * Klasa opisująca panel Swing, w którym odbywa się rysowanie grafiki oraz
+ * obsługa mechaniki gry.
  *
  * @author Pawe� Kowalik
  * @author Adrian Pacholec
@@ -17,31 +16,45 @@ import javax.swing.JFrame;
 
 public class Game extends Control {
 	/**
-	 * 
+	 * Identyfikator wersji klasy
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Flaga informująca, czy została zebrana tzw. "gwiazdka"
+	 */
 	public static boolean gwiazdka;
 	/**
 	 * Nick gracza
 	 */
 	public static String nick;
-
+	/**
+	 * Liczba punktów
+	 */
 	static int points = 0;
+	/**
+	 * Liczba żyć
+	 */
 	static int life = 3;
+	/**
+	 * Zmienna przechowująca czas zebrania "gwiazdki"
+	 */
 	private int start_star;
+	/**
+	 * Zmienna określająca graficzny temat gry
+	 */
 	public int temat;
-
+	/**
+	 * Indeks mapy w tablicy map do rozegrania
+	 */
 	public int map_index;
 	/**
-	 * zmienna przechowuj�ca liczb� �y� gracza
+	 * Flaga określająca, czy wszystkie punkty zostały zebrane
 	 */
 	public static boolean win;
-
 	/**
-	 * Obiekt reprezentuj�cy GUI
+	 * Obiekt reprezentujący GUI
 	 */
 	public static GUI gui;
-
 	/**
 	 * zmienna potrzebna do przekazania predkosci wrogow
 	 */
@@ -85,7 +98,7 @@ public class Game extends Control {
 		spritesheet = new Spritesheet("/sprites/male.png");
 		moneta = new Spritesheet("/sprites/coin.png");
 		gui = new GUI();
-		gwiazdka=false;
+		gwiazdka = false;
 		addKeyListener(this);
 		setFocusable(true);
 		timer.start();
@@ -94,9 +107,8 @@ public class Game extends Control {
 	}
 
 	/**
-	 * Metoda kończąca pracę programu
+	 * Metoda zatrzymująca grę
 	 */
-
 	public synchronized void stop() {
 		timer.stop();
 		if (win && map_index != mapaPath.length) {
@@ -109,6 +121,9 @@ public class Game extends Control {
 		}
 	}
 
+	/**
+	 * Metoda uruchamiająca kolejny poziom gry
+	 */
 	public void nextLevel() {
 		Game game2 = new Game(nick, enemyspeed, frame, mapaPath, map_index, points, temat);
 		frame.add(game2);
@@ -116,6 +131,9 @@ public class Game extends Control {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Metoda sterująca zachowaniem gry, ze względu obiekt gracza
+	 */
 	@Override
 	void updatePlayer() {
 		for (int i = 0; i < mapa.stars.size(); i++) {
@@ -164,17 +182,10 @@ public class Game extends Control {
 	}
 
 	/**
-	 * Metoda paint, rysuj�ca grafik�. Tworzy BufferedImage o wymiarach
-	 * pocz�tkowych, na podstawie kt�rego tworzony jest kontekst graficzny,
+	 * Metoda paint, rysująca grafikę. Tworzy BufferedImage o wymiarach
+	 * początkowych, na podstawie którego tworzony jest kontekst graficzny,
 	 * przekazywany do drugiego bufora, o rozmiarach takich, jak JPanel. W ten
-	 * spos�b generowana grafika rozci�gana jest do aktualnych rozmiar�w okna.
-	 * 
-	 * @param g
-	 *            Kontekst graficzny
-	 * 
-	 *            /** Metoda paintComponenet, wywo�ywana jest z metody paint -
-	 *            przy ka�dym jej wywo�aniu rysuje t�o planszy, a tak�e wywo�uje
-	 *            metody render() jej sk�adowych
+	 * sposób generowana grafika rozciągana jest do aktualnych rozmiarów okna.
 	 * 
 	 * @param g
 	 *            Kontekst graficzny

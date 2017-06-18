@@ -10,10 +10,18 @@ import java.awt.Rectangle;
  */
 public class Tile extends Rectangle {
 	/**
-	 * 
+	 * Identyfikator wersji klasy
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Tablica pomocnicza służąca wyborowi odpowiej grafiki z arkusza
+	 * graficznego
+	 */
 	int pos[] = new int[2];
+	/**
+	 * Tablica przechowująca współrzędne odpowiedniego pola na arkuszu
+	 * graficznym
+	 */
 	int map[] = { 0, 2 };
 
 	/**
@@ -23,6 +31,8 @@ public class Tile extends Rectangle {
 	 *            Pozycja x licz�c od lewego g�renego rogu panelu
 	 * @param y
 	 *            Pozycja y licz�c od lewego g�renego rogu panelu
+	 * @param temat
+	 *            Numer odpowiedniego tematu graficznego
 	 * 
 	 */
 	public Tile(int x, int y, int[] pozycja, int temat) {
@@ -32,10 +42,13 @@ public class Tile extends Rectangle {
 	}
 
 	/**
-	 * Metoda rysuj�ca reprezentacj� �ciany
+	 * Metoda określająca względną pozycję obiektu ściany w stosunku do
+	 * otaczających jej ścian
 	 * 
-	 * @param g
-	 *            Kontekst graficzny
+	 * @param pozycja
+	 *            Tablica reprezentująca obiekty otaczające analizowany obiekt
+	 *            ściany
+	 * 
 	 * 
 	 */
 	private void okresl_pozycje(int[] pozycja) {
@@ -98,6 +111,13 @@ public class Tile extends Rectangle {
 
 	}
 
+	/**
+	 * Metoda rysująca reprezentację ściany na podstawie otaczających jej ścian
+	 * 
+	 * @param g
+	 *            Kontekst graficzny
+	 * 
+	 */
 	public void render(Graphics g) {
 		Spritesheet sheet = Control.spritesheet;
 		g.drawImage(sheet.getSprite(pos[1] + map[1] * 3, pos[0] + map[0] * 6), x, y, null);

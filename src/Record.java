@@ -1,11 +1,10 @@
 
 /**
- * 
- * @author Pawel Kowalik
- * @author Adrian Pacholec
+ * Klasa przechowujaca obiekty rekord ktore beda sortowane w klasie komparator
  *
- *         klasa przechowujaca obiekty rekord ktore beda sortowane w klasie
- *         komparator
+ * @author Pawe� Kowalik
+ * @author Adrian Pacholec
+ * @version 1.0
  */
 
 public class Record {

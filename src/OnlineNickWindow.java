@@ -4,19 +4,34 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class OnlineNickWindow extends NickWindow {
+	/**
+	 * adres z jakim nawiązano połączenie
+	 */
 	private String adres;
+	/**
+	 * zmienne przechowujące informacje o połączeniu
+	 */
 	private int wybor, port;
 	/**
-	 * 
+	 * nieobowi�zowy identyfikator klasy
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Konstruktor panelu wyboru nicku i poziomu truności gry online
+	 * 
+	 * @param frame
+	 *            Obiekt okna programu
+	 * @param wybor
+	 *            Numer wybranej gry
+	 * @param port
+	 *            Port, z którym nawiązano połączenie
+	 */
 	public OnlineNickWindow(JFrame frame, int wybor, String adres, int port) {
 		super(frame);
 		this.wybor = wybor;
 		this.port = port;
 		this.adres = adres;
-
 	}
 
 	@Override

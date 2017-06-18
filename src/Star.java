@@ -11,7 +11,7 @@ import java.awt.Rectangle;
 public class Star extends Rectangle {
 
 	/**
-	 * 
+	 * Identyfikator wersji klasy
 	 */
 	private static final long serialVersionUID = 1L;
 

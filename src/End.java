@@ -22,18 +22,31 @@ import javax.swing.SwingConstants;
 public class End extends JPanel implements ActionListener {
 
 	/**
-	 * 
+	 * Identyfikator wersji klasy
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Przyciski panelu kończącego grę
+	 */
 	JButton mainmenu, end;
+	/**
+	 * Etykiety panelu kończącego grę
+	 */
 	JLabel nicklabel, punktylabel, koniec;
+	/**
+	 * Okno programu
+	 */
 	JFrame frame;
 
 	/**
-	 * Constructor klasy Victory
+	 * Constructor klasy End
 	 * 
+	 * @param frame
+	 *            Okno programu
 	 * @param points
+	 *            Liczba zdobytych punktów
 	 * @param nick
+	 *            Nick gracza
 	 */
 	public End(JFrame frame, String nick, int points) {
 		this.frame = frame;
@@ -62,6 +75,9 @@ public class End extends JPanel implements ActionListener {
 	}
 
 	@Override
+	/**
+	 * Metoda sterująca zachowaniem po wciśnięciu przycisków
+	 */
 	public void actionPerformed(ActionEvent e) {
 		highscore();
 		if (e.getSource() == mainmenu) {
@@ -76,6 +92,10 @@ public class End extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * Metoda podsumowująca grę i zapisująca wynik w pliku z najlepszymi
+	 * wynikami gry offline, jeżeli jest lepszy od 10 istniejących rekorów
+	 */
 	public void highscore() {
 		ArrayList<Record> records = new ArrayList<>();
 

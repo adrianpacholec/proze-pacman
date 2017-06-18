@@ -15,8 +15,8 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 /**
- * Klasa InstructionWindow, kt�ra zajmuje si� wy�wietlaniem okna z instrukscj�
- * do gry, dziedzicz�ca po JFrame
+ * Klasa InstructionWindow, która zajmuje się wyświetlaniem najlepszych wyników
+ * gry offline
  * 
  * @author Pawel Kowalik
  * @author Adrian PAcholec
@@ -29,26 +29,38 @@ public class Scores extends JPanel implements ActionListener {
 	 * nieobowi�zkowy identyfikator klasy
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * skaner plików
+	 */
 	public static Scanner file;
 	/**
-	 * ScrollPane kt�ry umo�liwia przewijanie okna z instrukcj�, je�li jest ona
-	 * za d�uga by zmie�ci� si� na ekranie
+	 * ScrollPane umożliwiający przewijanie wynikow, gdy nie będą mieściły się w
+	 * panelu
 	 */
 	private JScrollPane scrollPane;
-	private JButton back;
-	private JLabel wyniki;
-	public JFrame frame;
-
 	/**
-	 * plik z kt�rego b�dziemy odczytywa� instrukcj�
+	 * przycisk powrotu
 	 */
-
+	private JButton back;
+	/**
+	 * etykieta wyświetlana w panelu
+	 */
+	private JLabel wyniki;
+	/**
+	 * okno programu
+	 */
+	public JFrame frame;
 	/**
 	 * pole tekstowe na kt�rym instrukcja b�dzie wy�wietlona
 	 */
 	private final JTextArea textArea;
 
-	// @SuppressWarnings("unused")
+	/**
+	 * Konstruktor panelu z najlepszymi wynikami
+	 *
+	 * @param frame
+	 *            okno programu
+	 */
 	public Scores(JFrame frame) {
 
 		this.frame = frame;

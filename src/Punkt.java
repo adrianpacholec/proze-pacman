@@ -11,9 +11,12 @@ import java.awt.Rectangle;
 public class Punkt extends Rectangle {
 
 	/**
-	 * 
+	 * Identyfikator wersji klasy
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Zmienna pomocnicza przy animacji
+	 */
 	private int licznik;
 	/**
 	 * Konstruktor obiektu punktu

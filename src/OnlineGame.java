@@ -1,3 +1,4 @@
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +40,7 @@ public class OnlineGame extends JPanel implements ActionListener {
 	 */
 	private JTextField ip_field, port_field;
 	private String ip_address;
-	JLabel port;
+	JLabel port, plansze;
 
 	public JFrame frame;
 
@@ -63,11 +66,11 @@ public class OnlineGame extends JPanel implements ActionListener {
 
 	public OnlineGame(JFrame frame) {
 
-		setLayout(new GridLayout(6, 1));
+		setLayout(new GridLayout(2, 1));
 		this.frame = frame;
 		JPanel fields = new JPanel();
 
-		fields.setLayout(new GridLayout(2, 2));
+		fields.setLayout(new GridLayout(3, 2));
 		fields.add(new JLabel("Adres IP", SwingConstants.CENTER));
 		fields.add(new JLabel("Port", SwingConstants.CENTER));
 		ip_field = new JTextField();
@@ -85,11 +88,15 @@ public class OnlineGame extends JPanel implements ActionListener {
 		;
 		fields.add(port_field);
 
-		add(fields);
+		
 		connect = new JButton("Połącz");
-		add(connect);
+		fields.add(connect);
 		connect.addActionListener(this);
+		back = new JButton(Config.ButtonBack);
+		fields.add(back);
+		back.addActionListener(this);
 		ip_field.requestFocus();
+		add(fields);
 		frame.pack();
 	}
 
@@ -101,15 +108,17 @@ public class OnlineGame extends JPanel implements ActionListener {
 				nr_portu = Integer.parseInt(port_field.getText());
 				ip_address = ip_field.getText();
 				s = new Socket(ip_address, nr_portu);
-				add(new JLabel("Połączono z: " + ip_address + ":" + port_field.getText(), SwingConstants.CENTER));
+				//add(new JLabel("Połączono z: " + ip_address + ":" + port_field.getText(), SwingConstants.CENTER));
 				InputStream inStream = s.getInputStream();
 				OutputStream outStream = s.getOutputStream();
 				PrintWriter out = new PrintWriter(outStream, true);
+				@SuppressWarnings("resource")
 				Scanner in = new Scanner(inStream);
 				// żadanie gier
 				out.println("GET GAMES");
 				// odbierz gry
 				updateStatus(in.nextLine().split("%"));
+				
 			} catch (IOException e1) {
 				System.out.println("Nie udało się nawiązać połączenia.");
 			}
@@ -145,7 +154,7 @@ public class OnlineGame extends JPanel implements ActionListener {
 				this.setVisible(false);
 				frame.add(nickwindow);
 				frame.setVisible(true);
-
+				in.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -154,22 +163,23 @@ public class OnlineGame extends JPanel implements ActionListener {
 	}
 
 	public void updateStatus(String[] words) {
-		add(new JLabel("Pobrane gry:", SwingConstants.CENTER));
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		plansze = new JLabel("Pobrane gry:", SwingConstants.CENTER);
+		panel.add(plansze);
+		plansze.setAlignmentX(Component.CENTER_ALIGNMENT);
 		list = new JList<String>(words);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		add(new JScrollPane(list));
+		panel.add(new JScrollPane(list));
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
 			}
 		});
-		JPanel opcje = new JPanel();
+		
 		ok = new JButton(Config.ButtonOK);
-		opcje.add(ok);
+		panel.add(ok);
 		ok.addActionListener(this);
-		back = new JButton(Config.ButtonBack);
-		opcje.add(back);
-		back.addActionListener(this);
-		add(opcje);
+		add(panel);
 		revalidate();
 		repaint();
 		frame.pack();

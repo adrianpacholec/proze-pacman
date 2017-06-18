@@ -9,8 +9,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
-
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,22 +26,54 @@ import javax.swing.SwingConstants;
 public class OnlineEnd extends JPanel implements ActionListener {
 
 	/**
-	 * 
+	 * Identyfikator wersji klasy
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * przyciski do poruszania si� po menu
+	 */
 	JButton back, end;
-	JLabel nicklabel, punktylabel,koniec;
+	/**
+	 * etykiety panelu końca gry online
+	 */
+	JLabel nicklabel, punktylabel, koniec;
+	/**
+	 * obiekt okna programu
+	 */
 	JFrame frame;
-	String nick,adres;
+	/**
+	 * zmienne z nickiem i adresem
+	 */
+	String nick, adres;
+	/**
+	 * obiekt pola z suwakiem
+	 */
 	private JScrollPane scrollPane;
+	/**
+	 * zmienne przechowujące liczbę punktów i paramtery połączenia
+	 */
 	int points, online, port;
+	/**
+	 * Obiekt skanera
+	 */
 	public static Scanner file;
 
 	/**
-	 * Constructor klasy Victory
+	 * Konstruktor panelu kończącego rozgrywkę
 	 * 
-	 * @param points
 	 * @param nick
+	 *            Nick gracza
+	 * @param frame
+	 *            Okno programu
+	 * @param points
+	 *            liczba punktów
+	 * @param online
+	 *            Numer wybranej gry online
+	 * @param adres
+	 *            Adres, z którym nawiązano połączenie
+	 * @param port
+	 *            Numer portu, z którym nawiązano połączenie
+	 * 
 	 */
 	public OnlineEnd(JFrame frame, String nick, int points, int online, String adres, int port) {
 		this.frame = frame;
@@ -63,7 +93,7 @@ public class OnlineEnd extends JPanel implements ActionListener {
 		add(nicklabel);
 		nicklabel.setFont(new Font(Font.DIALOG, Font.BOLD, 19));
 		add(new JLabel("Najlepsze wyniki:", SwingConstants.CENTER));
-		wyslijWyniki(nick, adres, points);	
+		wyslijWyniki(nick, adres, points);
 	}
 
 	@Override
@@ -82,6 +112,19 @@ public class OnlineEnd extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * Metoda odpowiedzialna za podsumowanie i wysłanie do serwera uzyskanego
+	 * wyniku, a następnie uzyskanie odpowiedzi w postaci zaktualizowanej listy
+	 * najlepszych wyników danej gry online, zapisanie jej do pliku i
+	 * wyświtlenie na ekranie.
+	 * 
+	 * @param nick
+	 *            Nick gracza
+	 * @param adres
+	 *            Adres, z którym nawiązano połączenie
+	 * @param points
+	 *            Zdobyta liczba punktów
+	 */
 	public void wyslijWyniki(String nick, String adres, int points) {
 		try {
 			Socket s = new Socket(adres, port);
@@ -95,7 +138,7 @@ public class OnlineEnd extends JPanel implements ActionListener {
 			System.out.println("klient wyslalem score");
 			out.println("GET HSCORES");
 			save("online_high_scores" + online + ".txt", in.nextLine().split("%"));
-			
+
 			JTextArea textArea = new JTextArea();
 			scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 					JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -110,7 +153,7 @@ public class OnlineEnd extends JPanel implements ActionListener {
 			textArea.setEditable(false);
 			textArea.setWrapStyleWord(true);
 			add(scrollPane);
-			
+
 			JPanel opcje = new JPanel();
 
 			back = new JButton("Powrót");
@@ -124,13 +167,22 @@ public class OnlineEnd extends JPanel implements ActionListener {
 			revalidate();
 			repaint();
 			frame.pack();
+			in.close();
 			s.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
+
+	/**
+	 * Metoda zapisująca otrzymaną odpowiedz serwera do pliku
+	 * 
+	 * @param fileName
+	 *            Nazwa zapisywanego pliku
+	 * @param data
+	 *            Tablica zawierająca dane odebrane z serwera
+	 */
 	public void save(String fileName, String[] data) {
 		try {
 			PrintWriter writer = new PrintWriter(fileName, "UTF-8");
